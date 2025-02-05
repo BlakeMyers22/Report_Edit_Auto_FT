@@ -1,0 +1,1392 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NSF Inspection Process</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
+
+  <style>
+    .hidden { display: none; }
+    .prose {
+      max-width: 65ch;
+      margin: 0 auto;
+    }
+    .prose h1 {
+      font-size: 1.875rem;
+      font-weight: bold;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    .prose h2 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .prose p {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+    .prose ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+    .section-preview {
+      border-left: 4px solid #3b82f6;
+      padding-left: 1rem;
+      margin-bottom: 1rem;
+    }
+    .rating-button.selected {
+      background-color: #3b82f6;
+      color: white;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-center mb-8">NSF INSPECTION PROCESS</h1>
+
+    <!-- Main Form (with the new Save Inputs button, no "Project Name (again)" section) -->
+    <div class="bg-white rounded-lg shadow-lg p-6 mb-8" id="intakeContainer">
+      <form id="claimForm" class="space-y-6">
+        
+        <!-- PROJECT DATA -->
+        <div class="space-y-4">
+          <h2 class="text-xl font-semibold">Project Data</h2>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 font-bold">Project Name</label>
+            <input type="text" id="projectName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 font-bold">Property Owner Name</label>
+            <input type="text" id="propertyOwnerName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 font-bold">Address</label>
+            <input type="text" id="address" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 font-bold">Phone Number</label>
+            <input type="text" id="phoneNumber" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 font-bold">Email</label>
+            <input type="email" id="projectEmail" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 font-bold">DOL (Date of Loss)</label>
+            <input type="date" id="dol" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+          </div>
+        </div>
+
+        <!-- PROJECT BASIC INFORMATION -->
+        <div class="space-y-4">
+          <h2 class="text-xl font-semibold">Project Basic Information</h2>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 font-bold">Inspection Date</label>
+            <input type="date" id="investigationDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Property Type</label>
+            <select id="propertyType" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2">
+              <option value="residential">Residential</option>
+              <option value="commercial">Commercial</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Property Age (Years)</label>
+            <input type="number" id="propertyAge" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Construction Type</label>
+            <input 
+              type="text" 
+              id="constructionType" 
+              placeholder="e.g., Steel frame with brick veneer" 
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" 
+              required 
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Current Use</label>
+            <input 
+              type="text" 
+              id="currentUse" 
+              placeholder="e.g., Commercial office space" 
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" 
+              required 
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Square Footage</label>
+            <input type="number" id="squareFootage" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required />
+          </div>
+        </div>
+
+        <!-- CLAIM DATA -->
+        <div class="space-y-4">
+          <h2 class="text-xl font-semibold">Claim Data</h2>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Claim Type</label>
+            <div class="flex items-center space-x-4 mt-1">
+              <div>
+                <input type="checkbox" id="claimHail" class="rounded" />
+                <label for="claimHail" class="ml-1">Hail</label>
+              </div>
+              <div>
+                <input type="checkbox" id="claimWind" class="rounded" />
+                <label for="claimWind" class="ml-1">Wind</label>
+              </div>
+              <div>
+                <input type="checkbox" id="claimFoundation" class="rounded" />
+                <label for="claimFoundation" class="ml-1">Foundation</label>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Date of Loss (When damage was discovered)</label>
+            <input type="date" id="dateOfLoss" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Causation Date (When the cause occurred, if different)</label>
+            <input type="date" id="causationDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+            <p class="text-sm text-gray-500 mt-1">Leave blank if same as Date of Loss</p>
+          </div>
+        </div>
+
+        <!-- PROPERTY ANALYSIS QUESTIONS -->
+        <div class="space-y-4">
+          <h2 class="text-xl font-semibold">
+            Property Analysis Questions <span class="text-sm text-gray-600">(if applicable)</span>
+          </h2>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              What is the purported cause of loss?
+            </label>
+            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisCause"></textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              How big was the hail and what direction did it come from?
+            </label>
+            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisHail"></textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              How intense was the wind and what direction did it come from?
+            </label>
+            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisWind"></textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              How many times has the roof been replaced?
+            </label>
+            <input type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisRoofReplaced" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              What year was the most recent roof installed?
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisRoofYear" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              What direction is the prevailing wind? (e.g., N, W, S, E)
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisWindDirection" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              What is the pitch of the majority of the roof?
+            </label>
+            <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisRoofPitch">
+              <option value="1/12">1/12</option>
+              <option value="2/12">2/12</option>
+              <option value="3/12">3/12</option>
+              <option value="4/12">4/12</option>
+              <option value="5/12">5/12</option>
+              <option value="6/12">6/12</option>
+              <option value="7/12">7/12</option>
+              <option value="8/12">8/12</option>
+              <option value="9/12">9/12</option>
+              <option value="10/12">10/12</option>
+              <option value="11/12">11/12</option>
+              <option value="13/12">13/12</option>
+              <option value="14/12">14/12</option>
+              <option value="15/12">15/12</option>
+              <option value="16/12">16/12</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              What size is the collateral damage or hail spatter?
+            </label>
+            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisHailSpatter"></textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              What damage is visible to parapet caps and other soft metals (vents, A/C units, gutters)?
+            </label>
+            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisSoftMetals"></textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              Measure the impacts and provide the size of the impact indention.
+            </label>
+            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisImpactSize"></textarea>
+          </div>
+
+          <!-- Roof Type section (with multiple sub-categories) -->
+          <h3 class="font-bold">Roof Type</h3>
+          <div class="flex items-center space-x-2">
+            <input type="checkbox" class="rounded" id="roofMetalCheckbox" />
+            <label class="font-bold">Metal</label>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              Is this roof aluminum or metal?
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="roofMetalAluminum" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              What gauge is the roofing material?
+            </label>
+            <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="roofMetalGauge">
+              <option value="29">29</option>
+              <option value="28">28</option>
+              <option value="27">27</option>
+              <option value="26">26</option>
+              <option value="25">25</option>
+              <option value="24">24</option>
+            </select>
+          </div>
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700">
+              Select all that apply:
+            </label>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <input type="checkbox" class="rounded" id="metalPBR" />
+                <label class="ml-2">PBR Panel</label>
+              </div>
+              <div>
+                <input type="checkbox" class="rounded" id="metalSeam" />
+                <label class="ml-2">Standing Seam</label>
+              </div>
+              <div>
+                <input type="checkbox" class="rounded" id="metalTrapezoidal" />
+                <label class="ml-2">Trapezoidal</label>
+              </div>
+              <div>
+                <input type="checkbox" class="rounded" id="metalCorrugated" />
+                <label class="ml-2">Corrugated</label>
+              </div>
+              <div>
+                <input type="checkbox" class="rounded" id="metalDecra" />
+                <label class="ml-2">Decra</label>
+              </div>
+              <div>
+                <input type="checkbox" class="rounded" id="metalAluminumShake" />
+                <label class="ml-2">Aluminum Shake</label>
+              </div>
+              <div>
+                <input type="checkbox" class="rounded" id="metalOther" />
+                <label class="ml-2">Other (Please specify below)</label>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Additional engineer notes (if "Other")</label>
+            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="metalOtherNotes"></textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              If it is PBR panel, in which direction is the short lap facing?
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="pbrShortLapDirection" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              Are there gaps in the seam caused by wind or hail?
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="metalSeamGaps" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              Is the roof capable of shedding water as it did prior to the weather event?
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="metalSheddingWater" />
+          </div>
+
+          <!-- Composition Shingles -->
+          <div class="flex items-center space-x-2">
+            <input type="checkbox" class="rounded" id="roofCompCheckbox" />
+            <h3 class="font-bold">Composition Shingles</h3>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              Identify the number of damaged shingles on wind-facing vs. leeward side
+            </label>
+            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compDamagedShingles"></textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              How many different slopes of the roof are damaged?
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compSlopesDamaged" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              How many shingles are damaged in a 100 sq/ft test square?
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compShinglesTestSquare" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              Are the shingles able to survive a “brittle test”?
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compBrittleTest" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              What is the density or weight of the shingles?
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compShingleDensity" />
+          </div>
+
+          <!-- Single-Ply Membrane -->
+          <div class="flex items-center space-x-2">
+            <input type="checkbox" class="rounded" id="roofSinglePlyCheckbox" />
+            <h3 class="font-bold">Single-Ply Membrane</h3>
+          </div>
+          <div class="space-y-2">
+            <div>
+              <input type="checkbox" class="rounded" id="singleTPO" />
+              <label class="ml-2">TPO</label>
+            </div>
+            <div>
+              <input type="checkbox" class="rounded" id="singleEPDM" />
+              <label class="ml-2">EPDM</label>
+            </div>
+            <div>
+              <input type="checkbox" class="rounded" id="singlePVC" />
+              <label class="ml-2">PVC</label>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              Is the membrane fully adhered or mechanically fastened?
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="singleMembraneAttachment" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              Are there visible penetrations in the membrane?
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="singleVisiblePenetrations" />
+          </div>
+          <!-- NEW Engineer Notes Subsection for single-ply -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              Engineer Notes
+            </label>
+            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="singleEngineerNotes"></textarea>
+          </div>
+
+          <!-- Modified Bitumen -->
+          <div class="flex items-center space-x-2">
+            <input type="checkbox" class="rounded" id="roofModBitCheckbox" />
+            <h3 class="font-bold">Modified Bitumen</h3>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              Is there visible hail damage to the mod-bit?
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="modBitHailDamage" />
+          </div>
+
+          <!-- Built Up Roofing w/ Gravel Ballast -->
+          <div class="flex items-center space-x-2">
+            <input type="checkbox" class="rounded" id="roofBURCheckbox" />
+            <h3 class="font-bold">Built Up Roofing w/ Gravel Ballast</h3>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              Are there “bird nests” present in the gravel ballast?
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="burBirdNests" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              Does the underlying matting show visible hail damage?
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="burMattingDamage" />
+          </div>
+
+          <!-- Clay Tile Roofing -->
+          <div class="flex items-center space-x-2">
+            <input type="checkbox" class="rounded" id="roofClayTileCheckbox" />
+            <h3 class="font-bold">Clay Tile Roofing</h3>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Who is the manufacturer?</label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileManufacturer" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              Is this a discontinued product?
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileDiscontinued" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              How old is the roof?
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileAge" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              How is the tile attached? (e.g. mortar bed, nailed, or both)
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileAttach" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              What is the underlayment? (e.g., rolled roofing, tar paper, synthetic)
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileUnderlayment" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              Is drip edge present?
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileDripEdge" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              What shape is the tile? (e.g. flat, mission, Spanish, French, Riviera, Pantile)
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileShape" />
+          </div>
+
+          <!-- Concrete Tile Roofing -->
+          <div class="flex items-center space-x-2">
+            <input type="checkbox" class="rounded" id="roofConcreteTileCheckbox" />
+            <h3 class="font-bold">Concrete Tile Roofing</h3>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Who is the manufacturer?</label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileManufacturer" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Is this a discontinued product?</label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileDiscontinued" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">How old is the roof?</label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileAge" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">How is the tile attached?</label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileAttach" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">What is the underlayment?</label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileUnderlayment" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Is drip edge present?</label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileDripEdge" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">
+              What shape is the tile? (e.g. flat, mission, Spanish, French, Riviera, Pantile)
+            </label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileShape" />
+          </div>
+        </div>
+
+        <!-- DAMAGE ASSESSMENT -->
+        <div class="space-y-4">
+          <h2 class="text-xl font-semibold">Damage Assessment</h2>
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700">Affected Areas</label>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <input type="checkbox" id="roof" class="rounded" />
+                <label for="roof" class="ml-2">Roof</label>
+              </div>
+              <div>
+                <input type="checkbox" id="siding" class="rounded" />
+                <label for="siding" class="ml-2">Siding</label>
+              </div>
+              <div>
+                <input type="checkbox" id="windows" class="rounded" />
+                <label for="windows" class="ml-2">Windows</label>
+              </div>
+              <div>
+                <input type="checkbox" id="gutters" class="rounded" />
+                <label for="gutters" class="ml-2">Gutters</label>
+              </div>
+              <div>
+                <input type="checkbox" id="foundation" class="rounded" />
+                <label for="foundation" class="ml-2">Foundation</label>
+              </div>
+              <div>
+                <input type="checkbox" id="interior" class="rounded" />
+                <label for="interior" class="ml-2">Interior</label>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Engineer Notes</label>
+            <textarea 
+              id="engineerNotes" 
+              rows="4" 
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" 
+              placeholder="Enter your engineering observations, measurements, and technical specifications."
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- ENGINEER CREDENTIALS -->
+        <div class="space-y-4">
+          <h2 class="text-xl font-semibold">Engineer Credentials</h2>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Name</label>
+            <input type="text" id="engineerName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" id="engineerEmail" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">License Number</label>
+            <input type="text" id="engineerLicense" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Phone Number</label>
+            <input type="text" id="engineerPhone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+          </div>
+        </div>
+
+        <!-- Buttons at bottom of first page -->
+        <div class="flex space-x-4 mt-6">
+          <button 
+            type="submit" 
+            class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
+          >
+            Complete Inspection
+          </button>
+          
+          <!-- Save Inputs button (prompt for filename) -->
+          <button 
+            type="button" 
+            id="saveInputs" 
+            class="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700"
+          >
+            Save Inputs
+          </button>
+        </div>
+
+        <!-- Upload JSON input feature (to re-fill the form) -->
+        <div class="mt-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            Or Upload Previously Saved Inputs (JSON)
+          </label>
+          <input 
+            type="file" 
+            id="uploadInputs" 
+            accept=".json" 
+            class="p-2 border border-gray-300 rounded"
+          />
+        </div>
+      </form>
+    </div>
+
+    <!-- Section Generation Progress -->
+    <div id="sectionProgress" class="hidden bg-white rounded-lg shadow-lg p-6 mb-8">
+      <h2 class="text-xl font-semibold mb-4">Report Generation Progress</h2>
+      <div class="space-y-2">
+        <div class="flex items-center space-x-2">
+          <div class="w-4 h-4 rounded-full bg-gray-200" id="progress-introduction"></div>
+          <span>Introduction</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <div class="w-4 h-4 rounded-full bg-gray-200" id="progress-authorization"></div>
+          <span>Authorization and Scope</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <div class="w-4 h-4 rounded-full bg-gray-200" id="progress-background"></div>
+          <span>Background Information</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <div class="w-4 h-4 rounded-full bg-gray-200" id="progress-observations"></div>
+          <span>Site Observations and Analysis</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <div class="w-4 h-4 rounded-full bg-gray-200" id="progress-moisture"></div>
+          <span>Survey</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <div class="w-4 h-4 rounded-full bg-gray-200" id="progress-meteorologist"></div>
+          <span>Meteorologist Report</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <div class="w-4 h-4 rounded-full bg-gray-200" id="progress-conclusions"></div>
+          <span>Conclusions and Recommendations</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <div class="w-4 h-4 rounded-full bg-gray-200" id="progress-rebuttal"></div>
+          <span>Rebuttal</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <div class="w-4 h-4 rounded-full bg-gray-200" id="progress-limitations"></div>
+          <span>Limitations</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <div class="w-4 h-4 rounded-full bg-gray-200" id="progress-tableOfContents"></div>
+          <span>Table of Contents</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <div class="w-4 h-4 rounded-full bg-gray-200" id="progress-openingLetter"></div>
+          <span>Opening Letter</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Current Section Review -->
+    <div id="sectionReview" class="hidden bg-white rounded-lg shadow-lg p-6 mb-8">
+      <h2 class="text-xl font-semibold mb-4">Review Current Section</h2>
+      <div id="currentSectionTitle" class="text-lg font-medium mb-2"></div>
+      <div id="currentSectionContent" class="prose mb-6"></div>
+      
+      <div class="flex space-x-4">
+        <button id="regenerateSection" class="bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600">
+          Regenerate This Section
+        </button>
+        <button id="acceptSection" class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
+          Accept and Continue
+        </button>
+        <div class="relative inline-block">
+          <button id="rateSection" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
+            Rate This Section
+          </button>
+          <div 
+            id="ratingPopup" 
+            class="hidden absolute bottom-12 left-0 bg-white p-4 rounded-lg shadow-lg border w-96"
+          >
+            <p class="text-sm text-gray-600 mb-2">Rate this section (1-10):</p>
+            <div class="flex space-x-2 mb-4">
+              <button class="rating-button w-8 h-8 rounded-full border border-gray-300" data-rating="1">1</button>
+              <button class="rating-button w-8 h-8 rounded-full border border-gray-300" data-rating="2">2</button>
+              <button class="rating-button w-8 h-8 rounded-full border border-gray-300" data-rating="3">3</button>
+              <button class="rating-button w-8 h-8 rounded-full border border-gray-300" data-rating="4">4</button>
+              <button class="rating-button w-8 h-8 rounded-full border border-gray-300" data-rating="5">5</button>
+              <button class="rating-button w-8 h-8 rounded-full border border-gray-300" data-rating="6">6</button>
+              <button class="rating-button w-8 h-8 rounded-full border border-gray-300" data-rating="7">7</button>
+              <button class="rating-button w-8 h-8 rounded-full border border-gray-300" data-rating="8">8</button>
+              <button class="rating-button w-8 h-8 rounded-full border border-gray-300" data-rating="9">9</button>
+              <button class="rating-button w-8 h-8 rounded-full border border-gray-300" data-rating="10">10</button>
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm text-gray-600 mb-2">Feedback (minimum 10 words):</label>
+              <textarea 
+                id="ratingFeedback" 
+                class="w-full p-2 border rounded-md"
+                rows="3"
+              ></textarea>
+              <p id="wordCount" class="text-xs text-gray-500 mt-1">0 words</p>
+            </div>
+            <button 
+              id="submitRating" 
+              class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
+              disabled
+            >
+              Submit Rating
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="ratingMessage" class="hidden mt-2 text-sm text-green-600">
+        Rating submitted!
+      </div>
+
+      <!-- Regeneration Dialog -->
+      <div 
+        id="regenerationDialog" 
+        class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      >
+        <div class="bg-white rounded-lg p-6 max-w-2xl w-full mx-4">
+          <h3 class="text-lg font-semibold mb-4">Regenerate Section</h3>
+          <p class="text-gray-600 mb-4">
+            Provide specific instructions for regeneration, or leave blank.
+          </p>
+          <textarea 
+            id="regenerationInstructions" 
+            rows="4" 
+            class="w-full p-2 border rounded-md mb-4"
+          ></textarea>
+          <div class="flex justify-end space-x-4">
+            <button 
+              id="cancelRegeneration" 
+              class="px-4 py-2 text-gray-600 hover:text-gray-800"
+            >
+              Cancel
+            </button>
+            <button 
+              id="confirmRegeneration" 
+              class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            >
+              Regenerate
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Complete Report Preview -->
+    <div id="reportPreview" class="hidden bg-white rounded-lg shadow-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">Complete Report</h2>
+      <div id="completeReport" class="prose"></div>
+      <div class="mt-6">
+        <button id="downloadReport" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+          Download Report
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div 
+      id="loadingIndicator" 
+      class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 
+             flex items-center justify-center z-50"
+    >
+      <div class="bg-white p-6 rounded-lg shadow-xl">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+        <p class="text-lg font-semibold mt-4" id="loadingText">Generating report section...</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /***************************************************
+     * JavaScript: collect data, generate sections, etc.
+     ***************************************************/
+    const reportSections = [
+      { id: 'introduction', title: 'Introduction' },
+      { id: 'authorization', title: 'Authorization and Scope' },
+      { id: 'background', title: 'Background Information' },
+      { id: 'observations', title: 'Site Observations and Analysis' },
+      { id: 'moisture', title: 'Survey' },
+      { id: 'meteorologist', title: 'Meteorologist Report' },
+      { id: 'conclusions', title: 'Conclusions and Recommendations' },
+      { id: 'rebuttal', title: 'Rebuttal' },
+      { id: 'limitations', title: 'Limitations' },
+      { id: 'tableOfContents', title: 'Table of Contents' },
+      { id: 'openingLetter', title: 'Opening Letter' }
+    ];
+
+    let currentSectionIndex = 0;
+    let generatedSections = {};
+    let formContext = {};
+
+    function toggleLoading(show, message = 'Generating report section...') {
+      const loader = document.getElementById('loadingIndicator');
+      document.getElementById('loadingText').textContent = message;
+      loader.classList.toggle('hidden', !show);
+    }
+
+    function updateProgress(sectionId, status) {
+      const indicator = document.getElementById(`progress-${sectionId}`);
+      if (indicator) {
+        indicator.classList.remove('bg-gray-200', 'bg-green-500', 'bg-red-500');
+        if (status === 'complete') indicator.classList.add('bg-green-500');
+        else if (status === 'error') indicator.classList.add('bg-red-500');
+        else indicator.classList.add('bg-gray-200');
+      }
+    }
+
+    async function generateSection(sectionId, customInstructions = '') {
+      toggleLoading(true, `Generating ${reportSections.find(s => s.id === sectionId).title}...`);
+      try {
+        const response = await fetch('/.netlify/functions/generate-report', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            section: sectionId,
+            context: formContext,
+            customInstructions
+          })
+        });
+        if (!response.ok) throw new Error('Failed to generate section');
+
+        const data = await response.json();
+        updateProgress(sectionId, 'complete');
+        return data.section;
+      } catch (err) {
+        console.error(err);
+        updateProgress(sectionId, 'error');
+        throw err;
+      } finally {
+        toggleLoading(false);
+      }
+    }
+
+    function updateSectionPreview(sectionId, content) {
+      const secObj = reportSections.find(s => s.id === sectionId);
+      document.getElementById('currentSectionTitle').textContent = secObj ? secObj.title : 'Unknown Section';
+      document.getElementById('currentSectionContent').innerHTML = marked.parse(content);
+      document.getElementById('sectionReview').classList.remove('hidden');
+    }
+
+    function compileFinalReport() {
+      const finalOrder = [
+        'openingLetter',
+        'tableOfContents',
+        'introduction',
+        'authorization',
+        'background',
+        'observations',
+        'moisture',
+        'meteorologist',
+        'conclusions',
+        'rebuttal',
+        'limitations'
+      ];
+      let reportContent = '';
+      finalOrder.forEach(secId => {
+        if (generatedSections[secId]) {
+          const secTitle = reportSections.find(s => s.id === secId)?.title || secId;
+          reportContent += `# ${secTitle}\n\n${generatedSections[secId]}\n\n`;
+        }
+      });
+      document.getElementById('completeReport').innerHTML = marked.parse(reportContent);
+      document.getElementById('sectionReview').classList.add('hidden');
+      document.getElementById('reportPreview').classList.remove('hidden');
+    }
+
+    // FORM SUBMISSION
+    document.getElementById('claimForm').addEventListener('submit', async e => {
+      e.preventDefault();
+
+      // Gather data from all fields
+      const claimTypes = [];
+      if (document.getElementById('claimHail').checked) claimTypes.push('Hail');
+      if (document.getElementById('claimWind').checked) claimTypes.push('Wind');
+      if (document.getElementById('claimFoundation').checked) claimTypes.push('Foundation');
+
+      formContext = {
+        projectName: document.getElementById('projectName').value,
+        propertyOwnerName: document.getElementById('propertyOwnerName').value,
+        address: document.getElementById('address').value,
+        phoneNumber: document.getElementById('phoneNumber').value,
+        projectEmail: document.getElementById('projectEmail').value,
+        dol: document.getElementById('dol').value,
+        investigationDate: document.getElementById('investigationDate').value,
+        propertyType: document.getElementById('propertyType').value,
+        propertyAge: document.getElementById('propertyAge').value,
+        constructionType: document.getElementById('constructionType').value,
+        currentUse: document.getElementById('currentUse').value,
+        squareFootage: document.getElementById('squareFootage').value,
+        
+        claimType: claimTypes,
+        dateOfLoss: document.getElementById('dateOfLoss').value,
+        causationDate: document.getElementById('causationDate').value || document.getElementById('dateOfLoss').value,
+
+        // Affected areas
+        affectedAreas: [
+          ...(document.getElementById('roof').checked ? ['Roof'] : []),
+          ...(document.getElementById('siding').checked ? ['Siding'] : []),
+          ...(document.getElementById('windows').checked ? ['Windows'] : []),
+          ...(document.getElementById('gutters').checked ? ['Gutters'] : []),
+          ...(document.getElementById('foundation').checked ? ['Foundation'] : []),
+          ...(document.getElementById('interior').checked ? ['Interior'] : [])
+        ],
+
+        engineerNotes: document.getElementById('engineerNotes').value,
+        engineerName: document.getElementById('engineerName').value,
+        engineerEmail: document.getElementById('engineerEmail').value,
+        engineerLicense: document.getElementById('engineerLicense').value,
+        engineerPhone: document.getElementById('engineerPhone').value,
+
+        // Additional property analysis text
+        analysisCause: document.getElementById('analysisCause').value,
+        analysisHail: document.getElementById('analysisHail').value,
+        analysisWind: document.getElementById('analysisWind').value,
+        analysisRoofReplaced: document.getElementById('analysisRoofReplaced').value,
+        analysisRoofYear: document.getElementById('analysisRoofYear').value,
+        analysisWindDirection: document.getElementById('analysisWindDirection').value,
+        analysisRoofPitch: document.getElementById('analysisRoofPitch').value,
+        analysisHailSpatter: document.getElementById('analysisHailSpatter').value,
+        analysisSoftMetals: document.getElementById('analysisSoftMetals').value,
+        analysisImpactSize: document.getElementById('analysisImpactSize').value,
+
+        // All roofing subcategories
+        roofMetalChecked: document.getElementById('roofMetalCheckbox').checked,
+        roofMetalAluminum: document.getElementById('roofMetalAluminum').value,
+        roofMetalGauge: document.getElementById('roofMetalGauge').value,
+        metalPBR: document.getElementById('metalPBR').checked,
+        metalSeam: document.getElementById('metalSeam').checked,
+        metalTrapezoidal: document.getElementById('metalTrapezoidal').checked,
+        metalCorrugated: document.getElementById('metalCorrugated').checked,
+        metalDecra: document.getElementById('metalDecra').checked,
+        metalAluminumShake: document.getElementById('metalAluminumShake').checked,
+        metalOther: document.getElementById('metalOther').checked,
+        metalOtherNotes: document.getElementById('metalOtherNotes').value,
+        pbrShortLapDirection: document.getElementById('pbrShortLapDirection').value,
+        metalSeamGaps: document.getElementById('metalSeamGaps').value,
+        metalSheddingWater: document.getElementById('metalSheddingWater').value,
+
+        roofCompChecked: document.getElementById('roofCompCheckbox').checked,
+        compDamagedShingles: document.getElementById('compDamagedShingles').value,
+        compSlopesDamaged: document.getElementById('compSlopesDamaged').value,
+        compShinglesTestSquare: document.getElementById('compShinglesTestSquare').value,
+        compBrittleTest: document.getElementById('compBrittleTest').value,
+        compShingleDensity: document.getElementById('compShingleDensity').value,
+
+        roofSinglePlyChecked: document.getElementById('roofSinglePlyCheckbox').checked,
+        singleTPO: document.getElementById('singleTPO').checked,
+        singleEPDM: document.getElementById('singleEPDM').checked,
+        singlePVC: document.getElementById('singlePVC').checked,
+        singleMembraneAttachment: document.getElementById('singleMembraneAttachment').value,
+        singleVisiblePenetrations: document.getElementById('singleVisiblePenetrations').value,
+        // Newly added engineer notes for single-ply
+        singleEngineerNotes: document.getElementById('singleEngineerNotes').value,
+
+        roofModBitChecked: document.getElementById('roofModBitCheckbox').checked,
+        modBitHailDamage: document.getElementById('modBitHailDamage').value,
+
+        roofBURChecked: document.getElementById('roofBURCheckbox').checked,
+        burBirdNests: document.getElementById('burBirdNests').value,
+        burMattingDamage: document.getElementById('burMattingDamage').value,
+
+        roofClayTileChecked: document.getElementById('roofClayTileCheckbox').checked,
+        clayTileManufacturer: document.getElementById('clayTileManufacturer').value,
+        clayTileDiscontinued: document.getElementById('clayTileDiscontinued').value,
+        clayTileAge: document.getElementById('clayTileAge').value,
+        clayTileAttach: document.getElementById('clayTileAttach').value,
+        clayTileUnderlayment: document.getElementById('clayTileUnderlayment').value,
+        clayTileDripEdge: document.getElementById('clayTileDripEdge').value,
+        clayTileShape: document.getElementById('clayTileShape').value,
+
+        roofConcreteTileChecked: document.getElementById('roofConcreteTileCheckbox').checked,
+        concreteTileManufacturer: document.getElementById('concreteTileManufacturer').value,
+        concreteTileDiscontinued: document.getElementById('concreteTileDiscontinued').value,
+        concreteTileAge: document.getElementById('concreteTileAge').value,
+        concreteTileAttach: document.getElementById('concreteTileAttach').value,
+        concreteTileUnderlayment: document.getElementById('concreteTileUnderlayment').value,
+        concreteTileDripEdge: document.getElementById('concreteTileDripEdge').value,
+        concreteTileShape: document.getElementById('concreteTileShape').value
+      };
+
+      // Hide form, show progress
+      document.getElementById('intakeContainer').classList.add('hidden');
+      document.getElementById('sectionProgress').classList.remove('hidden');
+
+      // Generate the first section
+      try {
+        const content = await generateSection(reportSections[0].id);
+        generatedSections[reportSections[0].id] = content;
+        updateSectionPreview(reportSections[0].id, content);
+      } catch (err) {
+        alert('Failed to generate the first section. Please check console logs.');
+      }
+    });
+
+    // Save Inputs button
+    document.getElementById('saveInputs').addEventListener('click', () => {
+      // Gather data from the same fields that would go into formContext
+      // but let's ensure we do the same approach as the form submit, or
+      // we can do it simpler by reusing the same approach above.
+      // We'll do it the same way, so the user can save any time before hitting "Complete Inspection."
+
+      const claimTypes = [];
+      if (document.getElementById('claimHail').checked) claimTypes.push('Hail');
+      if (document.getElementById('claimWind').checked) claimTypes.push('Wind');
+      if (document.getElementById('claimFoundation').checked) claimTypes.push('Foundation');
+
+      // We'll write it into a local object instead of messing with formContext:
+      const currentData = {
+        projectName: document.getElementById('projectName').value,
+        propertyOwnerName: document.getElementById('propertyOwnerName').value,
+        address: document.getElementById('address').value,
+        phoneNumber: document.getElementById('phoneNumber').value,
+        projectEmail: document.getElementById('projectEmail').value,
+        dol: document.getElementById('dol').value,
+        investigationDate: document.getElementById('investigationDate').value,
+        propertyType: document.getElementById('propertyType').value,
+        propertyAge: document.getElementById('propertyAge').value,
+        constructionType: document.getElementById('constructionType').value,
+        currentUse: document.getElementById('currentUse').value,
+        squareFootage: document.getElementById('squareFootage').value,
+        
+        claimType: claimTypes,
+        dateOfLoss: document.getElementById('dateOfLoss').value,
+        causationDate: document.getElementById('causationDate').value || document.getElementById('dateOfLoss').value,
+
+        // Affected areas
+        affectedAreas: [
+          ...(document.getElementById('roof').checked ? ['Roof'] : []),
+          ...(document.getElementById('siding').checked ? ['Siding'] : []),
+          ...(document.getElementById('windows').checked ? ['Windows'] : []),
+          ...(document.getElementById('gutters').checked ? ['Gutters'] : []),
+          ...(document.getElementById('foundation').checked ? ['Foundation'] : []),
+          ...(document.getElementById('interior').checked ? ['Interior'] : [])
+        ],
+
+        engineerNotes: document.getElementById('engineerNotes').value,
+        engineerName: document.getElementById('engineerName').value,
+        engineerEmail: document.getElementById('engineerEmail').value,
+        engineerLicense: document.getElementById('engineerLicense').value,
+        engineerPhone: document.getElementById('engineerPhone').value,
+
+        // Additional property analysis text
+        analysisCause: document.getElementById('analysisCause').value,
+        analysisHail: document.getElementById('analysisHail').value,
+        analysisWind: document.getElementById('analysisWind').value,
+        analysisRoofReplaced: document.getElementById('analysisRoofReplaced').value,
+        analysisRoofYear: document.getElementById('analysisRoofYear').value,
+        analysisWindDirection: document.getElementById('analysisWindDirection').value,
+        analysisRoofPitch: document.getElementById('analysisRoofPitch').value,
+        analysisHailSpatter: document.getElementById('analysisHailSpatter').value,
+        analysisSoftMetals: document.getElementById('analysisSoftMetals').value,
+        analysisImpactSize: document.getElementById('analysisImpactSize').value,
+
+        // Roofing subcategories
+        roofMetalChecked: document.getElementById('roofMetalCheckbox').checked,
+        roofMetalAluminum: document.getElementById('roofMetalAluminum').value,
+        roofMetalGauge: document.getElementById('roofMetalGauge').value,
+        metalPBR: document.getElementById('metalPBR').checked,
+        metalSeam: document.getElementById('metalSeam').checked,
+        metalTrapezoidal: document.getElementById('metalTrapezoidal').checked,
+        metalCorrugated: document.getElementById('metalCorrugated').checked,
+        metalDecra: document.getElementById('metalDecra').checked,
+        metalAluminumShake: document.getElementById('metalAluminumShake').checked,
+        metalOther: document.getElementById('metalOther').checked,
+        metalOtherNotes: document.getElementById('metalOtherNotes').value,
+        pbrShortLapDirection: document.getElementById('pbrShortLapDirection').value,
+        metalSeamGaps: document.getElementById('metalSeamGaps').value,
+        metalSheddingWater: document.getElementById('metalSheddingWater').value,
+
+        roofCompChecked: document.getElementById('roofCompCheckbox').checked,
+        compDamagedShingles: document.getElementById('compDamagedShingles').value,
+        compSlopesDamaged: document.getElementById('compSlopesDamaged').value,
+        compShinglesTestSquare: document.getElementById('compShinglesTestSquare').value,
+        compBrittleTest: document.getElementById('compBrittleTest').value,
+        compShingleDensity: document.getElementById('compShingleDensity').value,
+
+        roofSinglePlyChecked: document.getElementById('roofSinglePlyCheckbox').checked,
+        singleTPO: document.getElementById('singleTPO').checked,
+        singleEPDM: document.getElementById('singleEPDM').checked,
+        singlePVC: document.getElementById('singlePVC').checked,
+        singleMembraneAttachment: document.getElementById('singleMembraneAttachment').value,
+        singleVisiblePenetrations: document.getElementById('singleVisiblePenetrations').value,
+        singleEngineerNotes: document.getElementById('singleEngineerNotes').value,
+
+        roofModBitChecked: document.getElementById('roofModBitCheckbox').checked,
+        modBitHailDamage: document.getElementById('modBitHailDamage').value,
+
+        roofBURChecked: document.getElementById('roofBURCheckbox').checked,
+        burBirdNests: document.getElementById('burBirdNests').value,
+        burMattingDamage: document.getElementById('burMattingDamage').value,
+
+        roofClayTileChecked: document.getElementById('roofClayTileCheckbox').checked,
+        clayTileManufacturer: document.getElementById('clayTileManufacturer').value,
+        clayTileDiscontinued: document.getElementById('clayTileDiscontinued').value,
+        clayTileAge: document.getElementById('clayTileAge').value,
+        clayTileAttach: document.getElementById('clayTileAttach').value,
+        clayTileUnderlayment: document.getElementById('clayTileUnderlayment').value,
+        clayTileDripEdge: document.getElementById('clayTileDripEdge').value,
+        clayTileShape: document.getElementById('clayTileShape').value,
+
+        roofConcreteTileChecked: document.getElementById('roofConcreteTileCheckbox').checked,
+        concreteTileManufacturer: document.getElementById('concreteTileManufacturer').value,
+        concreteTileDiscontinued: document.getElementById('concreteTileDiscontinued').value,
+        concreteTileAge: document.getElementById('concreteTileAge').value,
+        concreteTileAttach: document.getElementById('concreteTileAttach').value,
+        concreteTileUnderlayment: document.getElementById('concreteTileUnderlayment').value,
+        concreteTileDripEdge: document.getElementById('concreteTileDripEdge').value,
+        concreteTileShape: document.getElementById('concreteTileShape').value
+      };
+
+      const jsonData = JSON.stringify(currentData, null, 2);
+
+      // Prompt user for a filename
+      let chosenName = prompt("Enter a file name to save your inputs (without .json)");
+      if (!chosenName) return; // user canceled
+      // Remove any extension, add .json
+      chosenName = chosenName.replace(/\.[^.]*$/, '');
+      chosenName += ".json";
+
+      const blob = new Blob([jsonData], { type: 'application/json' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = chosenName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    });
+
+    // Upload inputs (JSON)
+    document.getElementById('uploadInputs').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const data = JSON.parse(event.target.result);
+
+          // Fill each field from data.* if present
+          document.getElementById('projectName').value = data.projectName || '';
+          document.getElementById('propertyOwnerName').value = data.propertyOwnerName || '';
+          document.getElementById('address').value = data.address || '';
+          document.getElementById('phoneNumber').value = data.phoneNumber || '';
+          document.getElementById('projectEmail').value = data.projectEmail || '';
+          document.getElementById('dol').value = data.dol || '';
+
+          document.getElementById('investigationDate').value = data.investigationDate || '';
+          document.getElementById('propertyType').value = data.propertyType || 'residential';
+          document.getElementById('propertyAge').value = data.propertyAge || '';
+          document.getElementById('constructionType').value = data.constructionType || '';
+          document.getElementById('currentUse').value = data.currentUse || '';
+          document.getElementById('squareFootage').value = data.squareFootage || '';
+
+          // Claim Type
+          if (data.claimType) {
+            document.getElementById('claimHail').checked = data.claimType.includes('Hail');
+            document.getElementById('claimWind').checked = data.claimType.includes('Wind');
+            document.getElementById('claimFoundation').checked = data.claimType.includes('Foundation');
+          }
+          document.getElementById('dateOfLoss').value = data.dateOfLoss || '';
+          document.getElementById('causationDate').value = data.causationDate || '';
+
+          // Affected areas
+          if (data.affectedAreas) {
+            document.getElementById('roof').checked = data.affectedAreas.includes('Roof');
+            document.getElementById('siding').checked = data.affectedAreas.includes('Siding');
+            document.getElementById('windows').checked = data.affectedAreas.includes('Windows');
+            document.getElementById('gutters').checked = data.affectedAreas.includes('Gutters');
+            document.getElementById('foundation').checked = data.affectedAreas.includes('Foundation');
+            document.getElementById('interior').checked = data.affectedAreas.includes('Interior');
+          }
+
+          document.getElementById('engineerNotes').value = data.engineerNotes || '';
+          document.getElementById('engineerName').value = data.engineerName || '';
+          document.getElementById('engineerEmail').value = data.engineerEmail || '';
+          document.getElementById('engineerLicense').value = data.engineerLicense || '';
+          document.getElementById('engineerPhone').value = data.engineerPhone || '';
+
+          document.getElementById('analysisCause').value = data.analysisCause || '';
+          document.getElementById('analysisHail').value = data.analysisHail || '';
+          document.getElementById('analysisWind').value = data.analysisWind || '';
+          document.getElementById('analysisRoofReplaced').value = data.analysisRoofReplaced || '';
+          document.getElementById('analysisRoofYear').value = data.analysisRoofYear || '';
+          document.getElementById('analysisWindDirection').value = data.analysisWindDirection || '';
+          document.getElementById('analysisRoofPitch').value = data.analysisRoofPitch || '';
+          document.getElementById('analysisHailSpatter').value = data.analysisHailSpatter || '';
+          document.getElementById('analysisSoftMetals').value = data.analysisSoftMetals || '';
+          document.getElementById('analysisImpactSize').value = data.analysisImpactSize || '';
+
+          // Roof categories
+          document.getElementById('roofMetalCheckbox').checked = data.roofMetalChecked || false;
+          document.getElementById('roofMetalAluminum').value = data.roofMetalAluminum || '';
+          document.getElementById('roofMetalGauge').value = data.roofMetalGauge || '29';
+          document.getElementById('metalPBR').checked = data.metalPBR || false;
+          document.getElementById('metalSeam').checked = data.metalSeam || false;
+          document.getElementById('metalTrapezoidal').checked = data.metalTrapezoidal || false;
+          document.getElementById('metalCorrugated').checked = data.metalCorrugated || false;
+          document.getElementById('metalDecra').checked = data.metalDecra || false;
+          document.getElementById('metalAluminumShake').checked = data.metalAluminumShake || false;
+          document.getElementById('metalOther').checked = data.metalOther || false;
+          document.getElementById('metalOtherNotes').value = data.metalOtherNotes || '';
+          document.getElementById('pbrShortLapDirection').value = data.pbrShortLapDirection || '';
+          document.getElementById('metalSeamGaps').value = data.metalSeamGaps || '';
+          document.getElementById('metalSheddingWater').value = data.metalSheddingWater || '';
+
+          document.getElementById('roofCompCheckbox').checked = data.roofCompChecked || false;
+          document.getElementById('compDamagedShingles').value = data.compDamagedShingles || '';
+          document.getElementById('compSlopesDamaged').value = data.compSlopesDamaged || '';
+          document.getElementById('compShinglesTestSquare').value = data.compShinglesTestSquare || '';
+          document.getElementById('compBrittleTest').value = data.compBrittleTest || '';
+          document.getElementById('compShingleDensity').value = data.compShingleDensity || '';
+
+          document.getElementById('roofSinglePlyCheckbox').checked = data.roofSinglePlyChecked || false;
+          document.getElementById('singleTPO').checked = data.singleTPO || false;
+          document.getElementById('singleEPDM').checked = data.singleEPDM || false;
+          document.getElementById('singlePVC').checked = data.singlePVC || false;
+          document.getElementById('singleMembraneAttachment').value = data.singleMembraneAttachment || '';
+          document.getElementById('singleVisiblePenetrations').value = data.singleVisiblePenetrations || '';
+          // new single engineer notes
+          document.getElementById('singleEngineerNotes').value = data.singleEngineerNotes || '';
+
+          document.getElementById('roofModBitCheckbox').checked = data.roofModBitChecked || false;
+          document.getElementById('modBitHailDamage').value = data.modBitHailDamage || '';
+
+          document.getElementById('roofBURCheckbox').checked = data.roofBURChecked || false;
+          document.getElementById('burBirdNests').value = data.burBirdNests || '';
+          document.getElementById('burMattingDamage').value = data.burMattingDamage || '';
+
+          document.getElementById('roofClayTileCheckbox').checked = data.roofClayTileChecked || false;
+          document.getElementById('clayTileManufacturer').value = data.clayTileManufacturer || '';
+          document.getElementById('clayTileDiscontinued').value = data.clayTileDiscontinued || '';
+          document.getElementById('clayTileAge').value = data.clayTileAge || '';
+          document.getElementById('clayTileAttach').value = data.clayTileAttach || '';
+          document.getElementById('clayTileUnderlayment').value = data.clayTileUnderlayment || '';
+          document.getElementById('clayTileDripEdge').value = data.clayTileDripEdge || '';
+          document.getElementById('clayTileShape').value = data.clayTileShape || '';
+
+          document.getElementById('roofConcreteTileCheckbox').checked = data.roofConcreteTileChecked || false;
+          document.getElementById('concreteTileManufacturer').value = data.concreteTileManufacturer || '';
+          document.getElementById('concreteTileDiscontinued').value = data.concreteTileDiscontinued || '';
+          document.getElementById('concreteTileAge').value = data.concreteTileAge || '';
+          document.getElementById('concreteTileAttach').value = data.concreteTileAttach || '';
+          document.getElementById('concreteTileUnderlayment').value = data.concreteTileUnderlayment || '';
+          document.getElementById('concreteTileDripEdge').value = data.concreteTileDripEdge || '';
+          document.getElementById('concreteTileShape').value = data.concreteTileShape || '';
+
+          alert('Inputs loaded successfully!');
+        } catch (err) {
+          alert("Error parsing JSON file. Please check the console for details.");
+          console.error(err);
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    // ACCEPT & CONTINUE
+    document.getElementById('acceptSection').addEventListener('click', async () => {
+      currentSectionIndex++;
+      if (currentSectionIndex >= reportSections.length) {
+        compileFinalReport();
+        return;
+      }
+      try {
+        const nextSectionId = reportSections[currentSectionIndex].id;
+        const content = await generateSection(nextSectionId);
+        generatedSections[nextSectionId] = content;
+        updateSectionPreview(nextSectionId, content);
+      } catch (err) {
+        alert('Failed to generate next section. See console logs.');
+        currentSectionIndex--;
+      }
+    });
+
+    // Regeneration logic
+    function toggleRegenerationDialog(show) {
+      document.getElementById('regenerationDialog').classList.toggle('hidden', !show);
+      if (show) {
+        document.getElementById('regenerationInstructions').value = '';
+      }
+    }
+    document.getElementById('regenerateSection').addEventListener('click', () => {
+      toggleRegenerationDialog(true);
+    });
+    document.getElementById('cancelRegeneration').addEventListener('click', () => {
+      toggleRegenerationDialog(false);
+    });
+    document.getElementById('confirmRegeneration').addEventListener('click', async () => {
+      const instructions = document.getElementById('regenerationInstructions').value.trim();
+      toggleRegenerationDialog(false);
+      try {
+        const sectionId = reportSections[currentSectionIndex].id;
+        const content = await generateSection(sectionId, instructions);
+        generatedSections[sectionId] = content;
+        updateSectionPreview(sectionId, content);
+      } catch (err) {
+        alert('Failed to regenerate section. See console logs.');
+      }
+    });
+
+    // Rating logic
+    document.getElementById('rateSection').addEventListener('click', () => {
+      document.getElementById('ratingPopup').classList.toggle('hidden');
+    });
+    document.querySelectorAll('.rating-button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.rating-button').forEach(x => {
+          x.classList.remove('bg-blue-500', 'text-white');
+        });
+        btn.classList.add('bg-blue-500', 'text-white');
+        const words = document.getElementById('ratingFeedback').value.trim().split(/\s+/).filter(w => w.length > 0);
+        document.getElementById('submitRating').disabled = !(words.length >= 10);
+      });
+    });
+    document.getElementById('ratingFeedback').addEventListener('input', e => {
+      const words = e.target.value.trim().split(/\s+/).filter(w => w.length > 0);
+      document.getElementById('wordCount').textContent = `${words.length} words`;
+      const hasRating = document.querySelector('.rating-button.bg-blue-500') !== null;
+      document.getElementById('submitRating').disabled = !(words.length >= 10 && hasRating);
+    });
+    document.getElementById('submitRating').addEventListener('click', () => {
+      const rating = document.querySelector('.rating-button.bg-blue-500')?.dataset.rating || '';
+      const feedback = document.getElementById('ratingFeedback').value;
+      console.log(`Section ${reportSections[currentSectionIndex].id} rated: ${rating}/10`);
+      console.log(`Feedback: ${feedback}`);
+      document.getElementById('ratingMessage').textContent = `Rating of ${rating}/10 submitted!`;
+      document.getElementById('ratingMessage').classList.remove('hidden');
+      document.getElementById('ratingPopup').classList.add('hidden');
+    });
+    document.addEventListener('click', e => {
+      const popup = document.getElementById('ratingPopup');
+      const rateButton = document.getElementById('rateSection');
+      if (!popup.contains(e.target) && !rateButton.contains(e.target)) {
+        popup.classList.add('hidden');
+      }
+    });
+
+    // Download final report
+    document.getElementById('downloadReport').addEventListener('click', () => {
+      let reportContent = document.getElementById('completeReport').innerHTML;
+      let sanitizedContent = reportContent
+        .replace(/[‘’]/g, "'")
+        .replace(/[“”]/g, '"')
+        .replace(/—/g, "--")
+        .replace(/–/g, "-");
+
+      if (!sanitizedContent.includes('<meta charset="UTF-8">')) {
+        sanitizedContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Final Report</title>
+</head>
+<body>
+  ${sanitizedContent}
+</body>
+</html>
+        `.trim();
+      }
+
+      const blob = new Blob([sanitizedContent], { type: 'text/html;charset=utf-8' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'forensic-report.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    });
+
+    // ESC key closes popups
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        toggleRegenerationDialog(false);
+        document.getElementById('ratingPopup').classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
