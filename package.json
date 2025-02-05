@@ -1,1 +1,30 @@
+{
+  "name": "claims-assistant",
+  "version": "1.0.0",
+  "description": "AI-powered forensic engineering report generator with weather data integration",
+  "main": "index.js",
+  "dependencies": {
+    "openai": "^4.0.0",
+    "axios": "^1.6.2",
+    "marked": "^9.1.2",
+    "@supabase/supabase-js": "^2.1.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/marked": "^5.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "claims",
+    "insurance",
+    "forensic",
+    "engineering",
+    "openai",
+    "weather"
+  ],
+  "author": "",
+  "license": "ISC"
+}
 
