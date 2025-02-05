@@ -102,7 +102,6 @@ async function getWeatherData(location, dateString) {
         minTemp: `${dayData.mintemp_f}°F`,
         avgTemp: `${dayData.avgtemp_f}°F`,
         maxWindGust: `${maxWindGust} mph`,
-        maxWindTime,
         totalPrecip: `${dayData.totalprecip_in} inches`,
         humidity: `${dayData.avghumidity}%`,
         conditions: dayData.condition.text,
