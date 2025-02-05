@@ -106,7 +106,7 @@ exports.handler = async function(event) {
 
     // Create the fine-tuning job for GPT-4
     const fineTune = await openai.fineTuning.jobs.create({
-      model: 'gpt-4',
+      model: 'chatgpt-4o-latest',
       training_file: openAIFileId
     });
     console.log('Fine-tune job created (async):', fineTune);
