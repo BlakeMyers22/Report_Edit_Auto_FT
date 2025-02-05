@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -777,9 +776,9 @@
   </div>
 
   <script>
-    /***************************************************
-     * JavaScript: collect data, generate sections, etc.
-     ***************************************************/
+    // NEW OR MODIFIED: We store all section ratings here
+    window.sectionRatings = {};
+
     const reportSections = [
       { id: 'introduction', title: 'Introduction' },
       { id: 'authorization', title: 'Authorization and Scope' },
@@ -871,6 +870,29 @@
       document.getElementById('completeReport').innerHTML = marked.parse(reportContent);
       document.getElementById('sectionReview').classList.add('hidden');
       document.getElementById('reportPreview').classList.remove('hidden');
+
+      // NEW OR MODIFIED: AUTOMATIC CALL TO store-training-data 
+      // after final report is compiled
+      const finalText = document.getElementById('completeReport').innerText;
+      const ratings = window.sectionRatings; 
+      const metadata = { dateStored: new Date().toISOString() };
+
+      fetch('/.netlify/functions/store-training-data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          finalReportText: finalText,
+          ratings,
+          metadata
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log('store-training-data response:', data);
+      })
+      .catch(err => {
+        console.error('Error storing 9+ report:', err);
+      });
     }
 
     // FORM SUBMISSION
@@ -958,7 +980,6 @@
         singlePVC: document.getElementById('singlePVC').checked,
         singleMembraneAttachment: document.getElementById('singleMembraneAttachment').value,
         singleVisiblePenetrations: document.getElementById('singleVisiblePenetrations').value,
-        // Newly added engineer notes for single-ply
         singleEngineerNotes: document.getElementById('singleEngineerNotes').value,
 
         roofModBitChecked: document.getElementById('roofModBitCheckbox').checked,
@@ -1003,17 +1024,11 @@
 
     // Save Inputs button
     document.getElementById('saveInputs').addEventListener('click', () => {
-      // Gather data from the same fields that would go into formContext
-      // but let's ensure we do the same approach as the form submit, or
-      // we can do it simpler by reusing the same approach above.
-      // We'll do it the same way, so the user can save any time before hitting "Complete Inspection."
-
       const claimTypes = [];
       if (document.getElementById('claimHail').checked) claimTypes.push('Hail');
       if (document.getElementById('claimWind').checked) claimTypes.push('Wind');
       if (document.getElementById('claimFoundation').checked) claimTypes.push('Foundation');
 
-      // We'll write it into a local object instead of messing with formContext:
       const currentData = {
         projectName: document.getElementById('projectName').value,
         propertyOwnerName: document.getElementById('propertyOwnerName').value,
@@ -1032,7 +1047,6 @@
         dateOfLoss: document.getElementById('dateOfLoss').value,
         causationDate: document.getElementById('causationDate').value || document.getElementById('dateOfLoss').value,
 
-        // Affected areas
         affectedAreas: [
           ...(document.getElementById('roof').checked ? ['Roof'] : []),
           ...(document.getElementById('siding').checked ? ['Siding'] : []),
@@ -1048,7 +1062,6 @@
         engineerLicense: document.getElementById('engineerLicense').value,
         engineerPhone: document.getElementById('engineerPhone').value,
 
-        // Additional property analysis text
         analysisCause: document.getElementById('analysisCause').value,
         analysisHail: document.getElementById('analysisHail').value,
         analysisWind: document.getElementById('analysisWind').value,
@@ -1060,7 +1073,6 @@
         analysisSoftMetals: document.getElementById('analysisSoftMetals').value,
         analysisImpactSize: document.getElementById('analysisImpactSize').value,
 
-        // Roofing subcategories
         roofMetalChecked: document.getElementById('roofMetalCheckbox').checked,
         roofMetalAluminum: document.getElementById('roofMetalAluminum').value,
         roofMetalGauge: document.getElementById('roofMetalGauge').value,
@@ -1147,7 +1159,6 @@
         try {
           const data = JSON.parse(event.target.result);
 
-          // Fill each field from data.* if present
           document.getElementById('projectName').value = data.projectName || '';
           document.getElementById('propertyOwnerName').value = data.propertyOwnerName || '';
           document.getElementById('address').value = data.address || '';
@@ -1162,7 +1173,6 @@
           document.getElementById('currentUse').value = data.currentUse || '';
           document.getElementById('squareFootage').value = data.squareFootage || '';
 
-          // Claim Type
           if (data.claimType) {
             document.getElementById('claimHail').checked = data.claimType.includes('Hail');
             document.getElementById('claimWind').checked = data.claimType.includes('Wind');
@@ -1171,7 +1181,6 @@
           document.getElementById('dateOfLoss').value = data.dateOfLoss || '';
           document.getElementById('causationDate').value = data.causationDate || '';
 
-          // Affected areas
           if (data.affectedAreas) {
             document.getElementById('roof').checked = data.affectedAreas.includes('Roof');
             document.getElementById('siding').checked = data.affectedAreas.includes('Siding');
@@ -1198,7 +1207,6 @@
           document.getElementById('analysisSoftMetals').value = data.analysisSoftMetals || '';
           document.getElementById('analysisImpactSize').value = data.analysisImpactSize || '';
 
-          // Roof categories
           document.getElementById('roofMetalCheckbox').checked = data.roofMetalChecked || false;
           document.getElementById('roofMetalAluminum').value = data.roofMetalAluminum || '';
           document.getElementById('roofMetalGauge').value = data.roofMetalGauge || '29';
@@ -1227,7 +1235,6 @@
           document.getElementById('singlePVC').checked = data.singlePVC || false;
           document.getElementById('singleMembraneAttachment').value = data.singleMembraneAttachment || '';
           document.getElementById('singleVisiblePenetrations').value = data.singleVisiblePenetrations || '';
-          // new single engineer notes
           document.getElementById('singleEngineerNotes').value = data.singleEngineerNotes || '';
 
           document.getElementById('roofModBitCheckbox').checked = data.roofModBitChecked || false;
@@ -1318,6 +1325,11 @@
           x.classList.remove('bg-blue-500', 'text-white');
         });
         btn.classList.add('bg-blue-500', 'text-white');
+
+        // NEW OR MODIFIED: store rating in global object
+        const currentSectionId = reportSections[currentSectionIndex].id;
+        window.sectionRatings[currentSectionId] = parseInt(btn.dataset.rating, 10);
+
         const words = document.getElementById('ratingFeedback').value.trim().split(/\s+/).filter(w => w.length > 0);
         document.getElementById('submitRating').disabled = !(words.length >= 10);
       });
@@ -1329,7 +1341,8 @@
       document.getElementById('submitRating').disabled = !(words.length >= 10 && hasRating);
     });
     document.getElementById('submitRating').addEventListener('click', () => {
-      const rating = document.querySelector('.rating-button.bg-blue-500')?.dataset.rating || '';
+      const ratingBtn = document.querySelector('.rating-button.bg-blue-500');
+      const rating = ratingBtn ? ratingBtn.dataset.rating : '';
       const feedback = document.getElementById('ratingFeedback').value;
       console.log(`Section ${reportSections[currentSectionIndex].id} rated: ${rating}/10`);
       console.log(`Feedback: ${feedback}`);
