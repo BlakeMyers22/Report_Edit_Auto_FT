@@ -387,7 +387,7 @@ exports.handler = async function(event) {
     let activeModel = await getActiveModel();
     if (!activeModel) {
       // fallback if none is set
-      activeModel = 'gpt-4';
+      activeModel = 'chatgpt-4o-latest';
     }
 
     // Create chat completion using the dynamic model
