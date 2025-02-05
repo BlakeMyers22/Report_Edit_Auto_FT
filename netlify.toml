@@ -21,7 +21,7 @@
 
 # This block sets up our scheduled function named "check-finetune-status"
 # to run every 15 minutes (*/15 * * * *).
-[[functions]]
+[functions]
   name = "check-finetune-status"
   schedule = "*/15 * * * *"
 
