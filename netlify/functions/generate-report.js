@@ -221,7 +221,7 @@ Do not add contradictory roofing details.
 `,
 
     authorization: `
-You are writing the "Authorization and Scope of Investigation" section.
+You are writing the "Authorization and Scope" section.
 Include:
 1) Who authorized it (e.g., property owner or law firm).
 2) The scope of work (site visit, photos, etc.).
