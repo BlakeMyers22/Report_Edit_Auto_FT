@@ -31,20 +31,28 @@ exports.handler = async function(event) {
   }
 
   try {
-    // 1) Get the current_finetune_job_id from Supabase
+    // Use maybeSingle() so missing row won't cause an error
     const { data: jobRow, error: jobRowError } = await supabase
       .from('app_settings')
       .select('value')
       .eq('key', 'current_finetune_job_id')
-      .single();
+      .maybeSingle();
 
+    // If there's a real DB error (like connection issues)
     if (jobRowError) {
       console.error('Error fetching current_finetune_job_id:', jobRowError);
-      throw new Error('Cannot fetch current fine-tune job ID');
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({
+          error: 'Cannot fetch current fine-tune job ID',
+          details: jobRowError.message
+        })
+      };
     }
 
-    const jobId = jobRow?.value || '';
-    if (!jobId) {
+    // If no row was found, jobRow == null
+    if (!jobRow) {
       return {
         statusCode: 200,
         headers,
@@ -54,7 +62,8 @@ exports.handler = async function(event) {
       };
     }
 
-    // 2) Check job status from OpenAI
+    // jobRow was found, so let's retrieve job status from OpenAI
+    const jobId = jobRow.value;
     const jobInfo = await openai.fineTuning.jobs.retrieve(jobId);
     console.log('Retrieved job info:', jobInfo);
     const jobStatus = jobInfo.status;
@@ -64,7 +73,7 @@ exports.handler = async function(event) {
       const newModelName = jobInfo.fine_tuned_model;
       console.log('Fine-tune job succeeded. New model is:', newModelName);
 
-      // 3) Update active_finetuned_model in Supabase
+      // Update active_finetuned_model in Supabase
       if (newModelName) {
         const { error: updateModelError } = await supabase
           .from('app_settings')
@@ -78,7 +87,7 @@ exports.handler = async function(event) {
         }
       }
 
-      // 4) Clear the job ID or set finetune_in_progress = false
+      // Clear the job ID or set finetune_in_progress = false
       await supabase
         .from('app_settings')
         .delete()
@@ -100,7 +109,6 @@ exports.handler = async function(event) {
         })
       };
     } else if (jobStatus === 'failed') {
-      // Cleanup or reset
       console.error('Fine-tune job failed:', jobInfo);
 
       await supabase
@@ -124,7 +132,7 @@ exports.handler = async function(event) {
         })
       };
     } else {
-      // It's still running or queued
+      // still running or queued
       return {
         statusCode: 200,
         headers,
