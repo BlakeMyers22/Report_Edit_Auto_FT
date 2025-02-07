@@ -18,4 +18,4 @@
 # NEW SYNTAX FOR SCHEDULED FUNCTIONS
 [[scheduled.functions]]
   function = "check-finetune-status"
-  cron = "*/15 * * * *"
+  cron = "*/1 * * * *"
