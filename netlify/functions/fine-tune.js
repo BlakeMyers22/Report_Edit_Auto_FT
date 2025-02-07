@@ -105,11 +105,27 @@ exports.handler = async function(event) {
     console.log('Uploaded file to OpenAI with ID:', openAIFileId);
 
     // Create the fine-tuning job for GPT-4
+    // 1) Retrieve the current active_finetuned_model from Supabase
+    const { data: modelRow, error: modelError } = await supabase
+      .from('app_settings')
+      .select('value')
+      .eq('key', 'active_finetuned_model')
+      .maybeSingle();
+    
+    if (modelError) {
+      console.error('Error fetching active_finetuned_model:', modelError);
+      throw new Error('Cannot fetch current active model from Supabase.');
+    }
+    
+    // If there's no row or the row is empty, default to "gpt-4o-2024-08-06"
+    let modelToFineTune = modelRow?.value || 'gpt-4o-2024-08-06';
+    
+    // 2) Create the fine-tuning job from that model
     const fineTune = await openai.fineTuning.jobs.create({
-      model: 'gpt-4o-2024-08-06',
+      model: modelToFineTune,
       training_file: openAIFileId
     });
-    console.log('Fine-tune job created (async):', fineTune);
+    console.log(`Fine-tune job created, starting from model: ${modelToFineTune}`, fineTune);
 
     // We have an ID for the job:
     const fineTuneId = fineTune.id;
