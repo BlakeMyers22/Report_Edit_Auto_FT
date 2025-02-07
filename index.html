@@ -47,13 +47,13 @@
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen">
- <!-- NEW CODE: A minimalist "Login Screen" at the top, shown by default -->
+  <!-- Minimalist Login Screen shown by default -->
   <div 
     id="loginPage" 
     class="flex flex-col items-center justify-center min-h-screen bg-white"
   >
     <div class="text-center">
-      <!-- Fake "logo" or brand. You can replace with an <img> if you have an actual logo -->
+      <!-- Brand / Logo -->
       <h1 class="text-4xl font-bold text-gray-800 mb-4">ADJUST.GLOBAL</h1>
       <p class="text-gray-500 mb-8">Login for authorized engineers</p>
       
@@ -82,621 +82,574 @@
       </div>
     </div>
   </div>
-  <!-- END NEW CODE -->
+  <!-- END Login Screen -->
 
-  <!-- NEW CODE: Wrap your existing container in a div that is hidden by default -->
+  <!-- Main Content (hidden by default until login is successful) -->
   <div id="mainContent" class="hidden">
-  
     <div class="container mx-auto px-4 py-8">
       <h1 class="text-3xl font-bold text-center mb-8">INSPECTION PROCESS</h1>
 
-      <!-- Main Form (with the new Save Inputs button, no "Project Name (again)" section) -->
-      <!--  . . . (YOUR EXISTING CODE REMAINS UNCHANGED HERE) . . . -->
+      <!-- ================ BEGIN INTAKE & FORM SECTION ================= -->
+      <div class="bg-white rounded-lg shadow-lg p-6 mb-8" id="intakeContainer">
+        <form id="claimForm" class="space-y-6">
+          <!-- PROJECT DATA -->
+          <div class="space-y-4">
+            <h2 class="text-xl font-semibold">Project Data</h2>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 font-bold">Project Name</label>
+              <input type="text" id="projectName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 font-bold">Property Owner Name</label>
+              <input type="text" id="propertyOwnerName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 font-bold">Address</label>
+              <input type="text" id="address" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 font-bold">Phone Number</label>
+              <input type="text" id="phoneNumber" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 font-bold">Email</label>
+              <input type="email" id="projectEmail" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 font-bold">DOL (Date of Loss)</label>
+              <input type="date" id="dol" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+            </div>
+          </div>
 
-      <!-- For brevity, I'm omitting your entire large form and generation script code here. -->
-      <!-- Just assume we keep everything from your original snippet. -->
+          <!-- PROJECT BASIC INFORMATION -->
+          <div class="space-y-4">
+            <h2 class="text-xl font-semibold">Project Basic Information</h2>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 font-bold">Inspection Date</label>
+              <input type="date" id="investigationDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Property Type</label>
+              <select id="propertyType" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2">
+                <option value="residential">Residential</option>
+                <option value="commercial">Commercial</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Property Age (Years)</label>
+              <input type="number" id="propertyAge" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Construction Type</label>
+              <input 
+                type="text" 
+                id="constructionType" 
+                placeholder="e.g., Steel frame with brick veneer" 
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" 
+                required 
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Current Use</label>
+              <input 
+                type="text" 
+                id="currentUse" 
+                placeholder="e.g., Commercial office space" 
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" 
+                required 
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Square Footage</label>
+              <input type="number" id="squareFootage" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required />
+            </div>
+          </div>
 
-    </div> <!-- container -->
+          <!-- CLAIM DATA -->
+          <div class="space-y-4">
+            <h2 class="text-xl font-semibold">Claim Data</h2>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Claim Type</label>
+              <div class="flex items-center space-x-4 mt-1">
+                <div>
+                  <input type="checkbox" id="claimHail" class="rounded" />
+                  <label for="claimHail" class="ml-1">Hail</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="claimWind" class="rounded" />
+                  <label for="claimWind" class="ml-1">Wind</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="claimFoundation" class="rounded" />
+                  <label for="claimFoundation" class="ml-1">Foundation</label>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Date of Loss (When damage was discovered)</label>
+              <input type="date" id="dateOfLoss" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Causation Date (When the cause occurred, if different)</label>
+              <input type="date" id="causationDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+              <p class="text-sm text-gray-500 mt-1">Leave blank if same as Date of Loss</p>
+            </div>
+          </div>
 
-  </div> <!-- #mainContent hidden by default -->
-
-  <script>
-    /*********************************************************
-     * Minimal login logic with allowed user/password pairs
-     *********************************************************/
-    const allowedLogins = {
-      blake: 'myers',
-      adam: 'hamid'
-      // You can add more pairs as needed:
-      // "someUser": "somePass",
-      // "anotherUser": "anotherPass"
-    };
-
-    const loginPage = document.getElementById('loginPage');
-    const mainContent = document.getElementById('mainContent');
-    const loginButton = document.getElementById('loginButton');
-    const loginUser   = document.getElementById('loginUser');
-    const loginPass   = document.getElementById('loginPass');
-
-    loginButton.addEventListener('click', () => {
-      const user = loginUser.value.trim();
-      const pass = loginPass.value.trim();
-
-      // Check if user is in allowedLogins and password matches
-      if (allowedLogins[user] && allowedLogins[user] === pass) {
-        // Hide the login screen
-        loginPage.classList.add('hidden');
-        // Show the main content
-        mainContent.classList.remove('hidden');
-      } else {
-        alert('Invalid credentials. Please try again.');
-      }
-    });
-  </script>
+          <!-- PROPERTY ANALYSIS QUESTIONS -->
+          <div class="space-y-4">
+            <h2 class="text-xl font-semibold">
+              Property Analysis Questions <span class="text-sm text-gray-600">(if applicable)</span>
+            </h2>
   
-  <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold text-center mb-8">INSPECTION PROCESS</h1>
-
-    <!-- Main Form (with the new Save Inputs button, no "Project Name (again)" section) -->
-    <div class="bg-white rounded-lg shadow-lg p-6 mb-8" id="intakeContainer">
-      <form id="claimForm" class="space-y-6">
-        
-        <!-- PROJECT DATA -->
-        <div class="space-y-4">
-          <h2 class="text-xl font-semibold">Project Data</h2>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 font-bold">Project Name</label>
-            <input type="text" id="projectName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                What is the purported cause of loss?
+              </label>
+              <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisCause"></textarea>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                How big was the hail and what direction did it come from?
+              </label>
+              <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisHail"></textarea>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                How intense was the wind and what direction did it come from?
+              </label>
+              <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisWind"></textarea>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                How many times has the roof been replaced?
+              </label>
+              <input type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisRoofReplaced" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                What year was the most recent roof installed?
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisRoofYear" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                What direction is the prevailing wind? (e.g., N, W, S, E)
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisWindDirection" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                What is the pitch of the majority of the roof?
+              </label>
+              <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisRoofPitch">
+                <option value="1/12">1/12</option>
+                <option value="2/12">2/12</option>
+                <option value="3/12">3/12</option>
+                <option value="4/12">4/12</option>
+                <option value="5/12">5/12</option>
+                <option value="6/12">6/12</option>
+                <option value="7/12">7/12</option>
+                <option value="8/12">8/12</option>
+                <option value="9/12">9/12</option>
+                <option value="10/12">10/12</option>
+                <option value="11/12">11/12</option>
+                <option value="13/12">13/12</option>
+                <option value="14/12">14/12</option>
+                <option value="15/12">15/12</option>
+                <option value="16/12">16/12</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                What size is the collateral damage or hail spatter?
+              </label>
+              <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisHailSpatter"></textarea>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                What damage is visible to parapet caps and other soft metals (vents, A/C units, gutters)?
+              </label>
+              <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisSoftMetals"></textarea>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                Measure the impacts and provide the size of the impact indention.
+              </label>
+              <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisImpactSize"></textarea>
+            </div>
+  
+            <!-- Roof Type section (with multiple sub-categories) -->
+            <h3 class="text-xl font-semibold">Roof Type</h2>
+            <div class="flex items-center space-x-2">
+              <input type="checkbox" class="rounded" id="roofMetalCheckbox" />
+              <label class="font-bold">Metal</label>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                Is this roof aluminum or metal?
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="roofMetalAluminum" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                What gauge is the roofing material?
+              </label>
+              <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="roofMetalGauge">
+                <option value="29">29</option>
+                <option value="28">28</option>
+                <option value="27">27</option>
+                <option value="26">26</option>
+                <option value="25">25</option>
+                <option value="24">24</option>
+              </select>
+            </div>
+            <div class="space-y-2">
+              <label class="block text-sm font-medium text-gray-700">
+                Select all that apply:
+              </label>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <input type="checkbox" class="rounded" id="metalPBR" />
+                  <label class="ml-2">PBR Panel</label>
+                </div>
+                <div>
+                  <input type="checkbox" class="rounded" id="metalSeam" />
+                  <label class="ml-2">Standing Seam</label>
+                </div>
+                <div>
+                  <input type="checkbox" class="rounded" id="metalTrapezoidal" />
+                  <label class="ml-2">Trapezoidal</label>
+                </div>
+                <div>
+                  <input type="checkbox" class="rounded" id="metalCorrugated" />
+                  <label class="ml-2">Corrugated</label>
+                </div>
+                <div>
+                  <input type="checkbox" class="rounded" id="metalDecra" />
+                  <label class="ml-2">Decra</label>
+                </div>
+                <div>
+                  <input type="checkbox" class="rounded" id="metalAluminumShake" />
+                  <label class="ml-2">Aluminum Shake</label>
+                </div>
+                <div>
+                  <input type="checkbox" class="rounded" id="metalOther" />
+                  <label class="ml-2">Other (Please specify below)</label>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Additional engineer notes (if "Other")</label>
+              <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="metalOtherNotes"></textarea>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                If it is PBR panel, in which direction is the short lap facing?
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="pbrShortLapDirection" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                Are there gaps in the seam caused by wind or hail?
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="metalSeamGaps" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                Is the roof capable of shedding water as it did prior to the weather event?
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="metalSheddingWater" />
+            </div>
+  
+            <!-- Composition Shingles -->
+            <div class="flex items-center space-x-2">
+              <input type="checkbox" class="rounded" id="roofCompCheckbox" />
+              <h3 class="font-bold">Composition Shingles</h3>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                Identify the number of damaged shingles on wind-facing vs. leeward side
+              </label>
+              <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compDamagedShingles"></textarea>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                How many different slopes of the roof are damaged?
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compSlopesDamaged" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                How many shingles are damaged in a 100 sq/ft test square?
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compShinglesTestSquare" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                Are the shingles able to survive a “brittle test”?
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compBrittleTest" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                What is the density or weight of the shingles?
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compShingleDensity" />
+            </div>
+  
+            <!-- Single-Ply Membrane -->
+            <div class="flex items-center space-x-2">
+              <input type="checkbox" class="rounded" id="roofSinglePlyCheckbox" />
+              <h3 class="font-bold">Single-Ply Membrane</h3>
+            </div>
+            <div class="space-y-2">
+              <div>
+                <input type="checkbox" class="rounded" id="singleTPO" />
+                <label class="ml-2">TPO</label>
+              </div>
+              <div>
+                <input type="checkbox" class="rounded" id="singleEPDM" />
+                <label class="ml-2">EPDM</label>
+              </div>
+              <div>
+                <input type="checkbox" class="rounded" id="singlePVC" />
+                <label class="ml-2">PVC</label>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                Is the membrane fully adhered or mechanically fastened?
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="singleMembraneAttachment" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                Are there visible penetrations in the membrane?
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="singleVisiblePenetrations" />
+            </div>
+            <!-- NEW Engineer Notes Subsection for single-ply -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                Engineer Notes
+              </label>
+              <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="singleEngineerNotes"></textarea>
+            </div>
+  
+            <!-- Modified Bitumen -->
+            <div class="flex items-center space-x-2">
+              <input type="checkbox" class="rounded" id="roofModBitCheckbox" />
+              <h3 class="font-bold">Modified Bitumen</h3>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                Is there visible hail damage to the mod-bit?
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="modBitHailDamage" />
+            </div>
+  
+            <!-- Built Up Roofing w/ Gravel Ballast -->
+            <div class="flex items-center space-x-2">
+              <input type="checkbox" class="rounded" id="roofBURCheckbox" />
+              <h3 class="font-bold">Built Up Roofing w/ Gravel Ballast</h3>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                Are there “bird nests” present in the gravel ballast?
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="burBirdNests" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                Does the underlying matting show visible hail damage?
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="burMattingDamage" />
+            </div>
+  
+            <!-- Clay Tile Roofing -->
+            <div class="flex items-center space-x-2">
+              <input type="checkbox" class="rounded" id="roofClayTileCheckbox" />
+              <h3 class="font-bold">Clay Tile Roofing</h3>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Who is the manufacturer?</label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileManufacturer" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                Is this a discontinued product?
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileDiscontinued" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                How old is the roof?
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileAge" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                How is the tile attached? (e.g. mortar bed, nailed, or both)
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileAttach" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                What is the underlayment? (e.g., rolled roofing, tar paper, synthetic)
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileUnderlayment" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                Is drip edge present?
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileDripEdge" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                What shape is the tile? (e.g. flat, mission, Spanish, French, Riviera, Pantile)
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileShape" />
+            </div>
+  
+            <!-- Concrete Tile Roofing -->
+            <div class="flex items-center space-x-2">
+              <input type="checkbox" class="rounded" id="roofConcreteTileCheckbox" />
+              <h3 class="font-bold">Concrete Tile Roofing</h3>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Who is the manufacturer?</label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileManufacturer" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Is this a discontinued product?</label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileDiscontinued" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">How old is the roof?</label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileAge" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">How is the tile attached?</label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileAttach" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">What is the underlayment?</label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileUnderlayment" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Is drip edge present?</label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileDripEdge" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">
+                What shape is the tile? (e.g. flat, mission, Spanish, French, Riviera, Pantile)
+              </label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileShape" />
+            </div>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 font-bold">Property Owner Name</label>
-            <input type="text" id="propertyOwnerName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+  
+          <!-- DAMAGE ASSESSMENT -->
+          <div class="space-y-4">
+            <h2 class="text-xl font-semibold">Damage Assessment</h2>
+            <div class="space-y-2">
+              <label class="block text-sm font-medium text-gray-700">Affected Areas</label>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <input type="checkbox" id="roof" class="rounded" />
+                  <label for="roof" class="ml-2">Roof</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="siding" class="rounded" />
+                  <label for="siding" class="ml-2">Siding</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="windows" class="rounded" />
+                  <label for="windows" class="ml-2">Windows</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="gutters" class="rounded" />
+                  <label for="gutters" class="ml-2">Gutters</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="foundation" class="rounded" />
+                  <label for="foundation" class="ml-2">Foundation</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="interior" class="rounded" />
+                  <label for="interior" class="ml-2">Interior</label>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Engineer Notes</label>
+              <textarea 
+                id="engineerNotes" 
+                rows="4" 
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" 
+                placeholder="Enter your engineering observations, measurements, and technical specifications."
+              ></textarea>
+            </div>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 font-bold">Address</label>
-            <input type="text" id="address" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+  
+          <!-- ENGINEER CREDENTIALS -->
+          <div class="space-y-4">
+            <h2 class="text-xl font-semibold">Engineer Credentials</h2>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Name</label>
+              <input type="text" id="engineerName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Email</label>
+              <input type="email" id="engineerEmail" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">License Number</label>
+              <input type="text" id="engineerLicense" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Phone Number</label>
+              <input type="text" id="engineerPhone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+            </div>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 font-bold">Phone Number</label>
-            <input type="text" id="phoneNumber" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
+  
+          <!-- Buttons at bottom of first page -->
+          <div class="flex space-x-4 mt-6">
+            <button 
+              type="submit" 
+              class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
+            >
+              Complete Inspection
+            </button>
+            
+            <!-- Save Inputs button (prompt for filename) -->
+            <button 
+              type="button" 
+              id="saveInputs" 
+              class="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700"
+            >
+              Save Inputs
+            </button>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 font-bold">Email</label>
-            <input type="email" id="projectEmail" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 font-bold">DOL (Date of Loss)</label>
-            <input type="date" id="dol" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
-          </div>
-        </div>
-
-        <!-- PROJECT BASIC INFORMATION -->
-        <div class="space-y-4">
-          <h2 class="text-xl font-semibold">Project Basic Information</h2>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 font-bold">Inspection Date</label>
-            <input type="date" id="investigationDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Property Type</label>
-            <select id="propertyType" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2">
-              <option value="residential">Residential</option>
-              <option value="commercial">Commercial</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Property Age (Years)</label>
-            <input type="number" id="propertyAge" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Construction Type</label>
+  
+          <!-- Upload JSON input feature (to re-fill the form) -->
+          <div class="mt-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Or Upload Previously Saved Inputs (JSON)
+            </label>
             <input 
-              type="text" 
-              id="constructionType" 
-              placeholder="e.g., Steel frame with brick veneer" 
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" 
-              required 
+              type="file" 
+              id="uploadInputs" 
+              accept=".json" 
+              class="p-2 border border-gray-300 rounded"
             />
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Current Use</label>
-            <input 
-              type="text" 
-              id="currentUse" 
-              placeholder="e.g., Commercial office space" 
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" 
-              required 
-            />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Square Footage</label>
-            <input type="number" id="squareFootage" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required />
-          </div>
-        </div>
+        </form>
+      </div>
 
-        <!-- CLAIM DATA -->
-        <div class="space-y-4">
-          <h2 class="text-xl font-semibold">Claim Data</h2>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Claim Type</label>
-            <div class="flex items-center space-x-4 mt-1">
-              <div>
-                <input type="checkbox" id="claimHail" class="rounded" />
-                <label for="claimHail" class="ml-1">Hail</label>
-              </div>
-              <div>
-                <input type="checkbox" id="claimWind" class="rounded" />
-                <label for="claimWind" class="ml-1">Wind</label>
-              </div>
-              <div>
-                <input type="checkbox" id="claimFoundation" class="rounded" />
-                <label for="claimFoundation" class="ml-1">Foundation</label>
-              </div>
-            </div>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Date of Loss (When damage was discovered)</label>
-            <input type="date" id="dateOfLoss" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" required />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Causation Date (When the cause occurred, if different)</label>
-            <input type="date" id="causationDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
-            <p class="text-sm text-gray-500 mt-1">Leave blank if same as Date of Loss</p>
-          </div>
-        </div>
 
-        <!-- PROPERTY ANALYSIS QUESTIONS -->
-        <div class="space-y-4">
-          <h2 class="text-xl font-semibold">
-            Property Analysis Questions <span class="text-sm text-gray-600">(if applicable)</span>
-          </h2>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              What is the purported cause of loss?
-            </label>
-            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisCause"></textarea>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              How big was the hail and what direction did it come from?
-            </label>
-            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisHail"></textarea>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              How intense was the wind and what direction did it come from?
-            </label>
-            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisWind"></textarea>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              How many times has the roof been replaced?
-            </label>
-            <input type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisRoofReplaced" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              What year was the most recent roof installed?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisRoofYear" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              What direction is the prevailing wind? (e.g., N, W, S, E)
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisWindDirection" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              What is the pitch of the majority of the roof?
-            </label>
-            <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisRoofPitch">
-              <option value="1/12">1/12</option>
-              <option value="2/12">2/12</option>
-              <option value="3/12">3/12</option>
-              <option value="4/12">4/12</option>
-              <option value="5/12">5/12</option>
-              <option value="6/12">6/12</option>
-              <option value="7/12">7/12</option>
-              <option value="8/12">8/12</option>
-              <option value="9/12">9/12</option>
-              <option value="10/12">10/12</option>
-              <option value="11/12">11/12</option>
-              <option value="13/12">13/12</option>
-              <option value="14/12">14/12</option>
-              <option value="15/12">15/12</option>
-              <option value="16/12">16/12</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              What size is the collateral damage or hail spatter?
-            </label>
-            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisHailSpatter"></textarea>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              What damage is visible to parapet caps and other soft metals (vents, A/C units, gutters)?
-            </label>
-            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisSoftMetals"></textarea>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Measure the impacts and provide the size of the impact indention.
-            </label>
-            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="analysisImpactSize"></textarea>
-          </div>
-
-          <!-- Roof Type section (with multiple sub-categories) -->
-          <h3 class="text-xl font-semibold">Roof Type</h2>
-          <div class="flex items-center space-x-2">
-            <input type="checkbox" class="rounded" id="roofMetalCheckbox" />
-            <label class="font-bold">Metal</label>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Is this roof aluminum or metal?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="roofMetalAluminum" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              What gauge is the roofing material?
-            </label>
-            <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="roofMetalGauge">
-              <option value="29">29</option>
-              <option value="28">28</option>
-              <option value="27">27</option>
-              <option value="26">26</option>
-              <option value="25">25</option>
-              <option value="24">24</option>
-            </select>
-          </div>
-          <div class="space-y-2">
-            <label class="block text-sm font-medium text-gray-700">
-              Select all that apply:
-            </label>
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <input type="checkbox" class="rounded" id="metalPBR" />
-                <label class="ml-2">PBR Panel</label>
-              </div>
-              <div>
-                <input type="checkbox" class="rounded" id="metalSeam" />
-                <label class="ml-2">Standing Seam</label>
-              </div>
-              <div>
-                <input type="checkbox" class="rounded" id="metalTrapezoidal" />
-                <label class="ml-2">Trapezoidal</label>
-              </div>
-              <div>
-                <input type="checkbox" class="rounded" id="metalCorrugated" />
-                <label class="ml-2">Corrugated</label>
-              </div>
-              <div>
-                <input type="checkbox" class="rounded" id="metalDecra" />
-                <label class="ml-2">Decra</label>
-              </div>
-              <div>
-                <input type="checkbox" class="rounded" id="metalAluminumShake" />
-                <label class="ml-2">Aluminum Shake</label>
-              </div>
-              <div>
-                <input type="checkbox" class="rounded" id="metalOther" />
-                <label class="ml-2">Other (Please specify below)</label>
-              </div>
-            </div>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Additional engineer notes (if "Other")</label>
-            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="metalOtherNotes"></textarea>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              If it is PBR panel, in which direction is the short lap facing?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="pbrShortLapDirection" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Are there gaps in the seam caused by wind or hail?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="metalSeamGaps" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Is the roof capable of shedding water as it did prior to the weather event?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="metalSheddingWater" />
-          </div>
-
-          <!-- Composition Shingles -->
-          <div class="flex items-center space-x-2">
-            <input type="checkbox" class="rounded" id="roofCompCheckbox" />
-            <h3 class="font-bold">Composition Shingles</h3>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Identify the number of damaged shingles on wind-facing vs. leeward side
-            </label>
-            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compDamagedShingles"></textarea>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              How many different slopes of the roof are damaged?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compSlopesDamaged" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              How many shingles are damaged in a 100 sq/ft test square?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compShinglesTestSquare" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Are the shingles able to survive a “brittle test”?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compBrittleTest" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              What is the density or weight of the shingles?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="compShingleDensity" />
-          </div>
-
-          <!-- Single-Ply Membrane -->
-          <div class="flex items-center space-x-2">
-            <input type="checkbox" class="rounded" id="roofSinglePlyCheckbox" />
-            <h3 class="font-bold">Single-Ply Membrane</h3>
-          </div>
-          <div class="space-y-2">
-            <div>
-              <input type="checkbox" class="rounded" id="singleTPO" />
-              <label class="ml-2">TPO</label>
-            </div>
-            <div>
-              <input type="checkbox" class="rounded" id="singleEPDM" />
-              <label class="ml-2">EPDM</label>
-            </div>
-            <div>
-              <input type="checkbox" class="rounded" id="singlePVC" />
-              <label class="ml-2">PVC</label>
-            </div>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Is the membrane fully adhered or mechanically fastened?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="singleMembraneAttachment" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Are there visible penetrations in the membrane?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="singleVisiblePenetrations" />
-          </div>
-          <!-- NEW Engineer Notes Subsection for single-ply -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Engineer Notes
-            </label>
-            <textarea rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="singleEngineerNotes"></textarea>
-          </div>
-
-          <!-- Modified Bitumen -->
-          <div class="flex items-center space-x-2">
-            <input type="checkbox" class="rounded" id="roofModBitCheckbox" />
-            <h3 class="font-bold">Modified Bitumen</h3>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Is there visible hail damage to the mod-bit?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="modBitHailDamage" />
-          </div>
-
-          <!-- Built Up Roofing w/ Gravel Ballast -->
-          <div class="flex items-center space-x-2">
-            <input type="checkbox" class="rounded" id="roofBURCheckbox" />
-            <h3 class="font-bold">Built Up Roofing w/ Gravel Ballast</h3>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Are there “bird nests” present in the gravel ballast?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="burBirdNests" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Does the underlying matting show visible hail damage?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="burMattingDamage" />
-          </div>
-
-          <!-- Clay Tile Roofing -->
-          <div class="flex items-center space-x-2">
-            <input type="checkbox" class="rounded" id="roofClayTileCheckbox" />
-            <h3 class="font-bold">Clay Tile Roofing</h3>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Who is the manufacturer?</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileManufacturer" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Is this a discontinued product?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileDiscontinued" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              How old is the roof?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileAge" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              How is the tile attached? (e.g. mortar bed, nailed, or both)
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileAttach" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              What is the underlayment? (e.g., rolled roofing, tar paper, synthetic)
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileUnderlayment" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              Is drip edge present?
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileDripEdge" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              What shape is the tile? (e.g. flat, mission, Spanish, French, Riviera, Pantile)
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="clayTileShape" />
-          </div>
-
-          <!-- Concrete Tile Roofing -->
-          <div class="flex items-center space-x-2">
-            <input type="checkbox" class="rounded" id="roofConcreteTileCheckbox" />
-            <h3 class="font-bold">Concrete Tile Roofing</h3>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Who is the manufacturer?</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileManufacturer" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Is this a discontinued product?</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileDiscontinued" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">How old is the roof?</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileAge" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">How is the tile attached?</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileAttach" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">What is the underlayment?</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileUnderlayment" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Is drip edge present?</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileDripEdge" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">
-              What shape is the tile? (e.g. flat, mission, Spanish, French, Riviera, Pantile)
-            </label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" id="concreteTileShape" />
-          </div>
-        </div>
-
-        <!-- DAMAGE ASSESSMENT -->
-        <div class="space-y-4">
-          <h2 class="text-xl font-semibold">Damage Assessment</h2>
-          <div class="space-y-2">
-            <label class="block text-sm font-medium text-gray-700">Affected Areas</label>
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <input type="checkbox" id="roof" class="rounded" />
-                <label for="roof" class="ml-2">Roof</label>
-              </div>
-              <div>
-                <input type="checkbox" id="siding" class="rounded" />
-                <label for="siding" class="ml-2">Siding</label>
-              </div>
-              <div>
-                <input type="checkbox" id="windows" class="rounded" />
-                <label for="windows" class="ml-2">Windows</label>
-              </div>
-              <div>
-                <input type="checkbox" id="gutters" class="rounded" />
-                <label for="gutters" class="ml-2">Gutters</label>
-              </div>
-              <div>
-                <input type="checkbox" id="foundation" class="rounded" />
-                <label for="foundation" class="ml-2">Foundation</label>
-              </div>
-              <div>
-                <input type="checkbox" id="interior" class="rounded" />
-                <label for="interior" class="ml-2">Interior</label>
-              </div>
-            </div>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Engineer Notes</label>
-            <textarea 
-              id="engineerNotes" 
-              rows="4" 
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" 
-              placeholder="Enter your engineering observations, measurements, and technical specifications."
-            ></textarea>
-          </div>
-        </div>
-
-        <!-- ENGINEER CREDENTIALS -->
-        <div class="space-y-4">
-          <h2 class="text-xl font-semibold">Engineer Credentials</h2>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Name</label>
-            <input type="text" id="engineerName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Email</label>
-            <input type="email" id="engineerEmail" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">License Number</label>
-            <input type="text" id="engineerLicense" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Phone Number</label>
-            <input type="text" id="engineerPhone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2" />
-          </div>
-        </div>
-
-        <!-- Buttons at bottom of first page -->
-        <div class="flex space-x-4 mt-6">
-          <button 
-            type="submit" 
-            class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
-          >
-            Complete Inspection
-          </button>
-          
-          <!-- Save Inputs button (prompt for filename) -->
-          <button 
-            type="button" 
-            id="saveInputs" 
-            class="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700"
-          >
-            Save Inputs
-          </button>
-        </div>
-
-        <!-- Upload JSON input feature (to re-fill the form) -->
-        <div class="mt-4">
-          <label class="block text-sm font-medium text-gray-700 mb-2">
-            Or Upload Previously Saved Inputs (JSON)
-          </label>
-          <input 
-            type="file" 
-            id="uploadInputs" 
-            accept=".json" 
-            class="p-2 border border-gray-300 rounded"
-          />
-        </div>
-      </form>
-    </div>
-
+      
     <!-- Section Generation Progress -->
     <div id="sectionProgress" class="hidden bg-white rounded-lg shadow-lg p-6 mb-8">
       <h2 class="text-xl font-semibold mb-4">Report Generation Progress</h2>
@@ -863,7 +816,36 @@
   </div>
 
   <script>
-    // NEW OR MODIFIED: We store all section ratings here
+    /*********************************************************
+     * Minimal login logic with allowed user/password pairs
+     *********************************************************/
+    const allowedLogins = {
+      blake: 'myers',
+      adam: 'hamid'
+      // add more if needed
+    };
+
+    const loginPage = document.getElementById('loginPage');
+    const mainContent = document.getElementById('mainContent');
+    const loginButton = document.getElementById('loginButton');
+    const loginUser   = document.getElementById('loginUser');
+    const loginPass   = document.getElementById('loginPass');
+
+    loginButton.addEventListener('click', () => {
+      const user = loginUser.value.trim();
+      const pass = loginPass.value.trim();
+
+      // Check if user is in allowedLogins and password matches
+      if (allowedLogins[user] && allowedLogins[user] === pass) {
+        // Hide the login screen
+        loginPage.classList.add('hidden');
+        // Show the main content
+        mainContent.classList.remove('hidden');
+      } else {
+        alert('Invalid credentials. Please try again.');
+      }
+    });
+
     window.sectionRatings = {};
 
     const reportSections = [
