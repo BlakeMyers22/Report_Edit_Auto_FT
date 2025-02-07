@@ -47,6 +47,93 @@
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen">
+ <!-- NEW CODE: A minimalist "Login Screen" at the top, shown by default -->
+  <div 
+    id="loginPage" 
+    class="flex flex-col items-center justify-center min-h-screen bg-white"
+  >
+    <div class="text-center">
+      <!-- Fake "logo" or brand. You can replace with an <img> if you have an actual logo -->
+      <h1 class="text-4xl font-bold text-gray-800 mb-4">Adjust</h1>
+      <p class="text-gray-500 mb-8">Minimalist login for authorized engineers</p>
+      
+      <!-- The login form -->
+      <div class="max-w-sm mx-auto bg-gray-50 shadow-md rounded-lg p-6">
+        <label class="block font-bold mb-2 text-gray-700">User ID</label>
+        <input 
+          type="text" 
+          id="loginUser" 
+          class="w-full p-2 mb-4 border rounded-md outline-none"
+          placeholder="Enter your user ID"
+        />
+        <label class="block font-bold mb-2 text-gray-700">Password</label>
+        <input 
+          type="password" 
+          id="loginPass" 
+          class="w-full p-2 mb-6 border rounded-md outline-none"
+          placeholder="Enter your password"
+        />
+        <button 
+          id="loginButton"
+          class="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+        >
+          Login
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- END NEW CODE -->
+
+  <!-- NEW CODE: Wrap your existing container in a div that is hidden by default -->
+  <div id="mainContent" class="hidden">
+  
+    <div class="container mx-auto px-4 py-8">
+      <h1 class="text-3xl font-bold text-center mb-8">NSF INSPECTION PROCESS</h1>
+
+      <!-- Main Form (with the new Save Inputs button, no "Project Name (again)" section) -->
+      <!--  . . . (YOUR EXISTING CODE REMAINS UNCHANGED HERE) . . . -->
+
+      <!-- For brevity, I'm omitting your entire large form and generation script code here. -->
+      <!-- Just assume we keep everything from your original snippet. -->
+
+    </div> <!-- container -->
+
+  </div> <!-- #mainContent hidden by default -->
+
+  <script>
+    /*********************************************************
+     * Minimal login logic with allowed user/password pairs
+     *********************************************************/
+    const allowedLogins = {
+      blake: 'myers',
+      adam: 'hamid'
+      // You can add more pairs as needed:
+      // "someUser": "somePass",
+      // "anotherUser": "anotherPass"
+    };
+
+    const loginPage = document.getElementById('loginPage');
+    const mainContent = document.getElementById('mainContent');
+    const loginButton = document.getElementById('loginButton');
+    const loginUser   = document.getElementById('loginUser');
+    const loginPass   = document.getElementById('loginPass');
+
+    loginButton.addEventListener('click', () => {
+      const user = loginUser.value.trim();
+      const pass = loginPass.value.trim();
+
+      // Check if user is in allowedLogins and password matches
+      if (allowedLogins[user] && allowedLogins[user] === pass) {
+        // Hide the login screen
+        loginPage.classList.add('hidden');
+        // Show the main content
+        mainContent.classList.remove('hidden');
+      } else {
+        alert('Invalid credentials. Please try again.');
+      }
+    });
+  </script>
+  
   <div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold text-center mb-8">INSPECTION PROCESS</h1>
 
