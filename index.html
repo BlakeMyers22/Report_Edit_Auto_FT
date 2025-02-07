@@ -889,6 +889,19 @@
       .then(res => res.json())
       .then(data => {
         console.log('store-training-data response:', data);
+              // 2) NEW CODE: right after storing the report, call check-finetune-status
+      //    so if a fine-tune has recently succeeded, it will update active_finetuned_model now.
+        fetch('/.netlify/functions/check-finetune-status')
+          .then(checkRes => checkRes.json())
+          .then(checkData => {
+            console.log('check-finetune-status response:', checkData);
+            // If job is succeeded, you'll see a message like:
+            // "Fine-tune succeeded. Model = ft:gpt-4o-2024-08-06:personal::AxiPS29Q..."
+            // This means Supabase is now updated to that new model name.
+          })
+          .catch(checkErr => {
+            console.error('Error calling check-finetune-status:', checkErr);
+          });
       })
       .catch(err => {
         console.error('Error storing 9+ report:', err);
