@@ -283,7 +283,13 @@ No placeholders.
 `,
 
     tableofcontents: `
-"Table of Contents" in markdown, headings in this order:
+Please produce the **Table of Contents** in a stacked list (column-like) with:
+- No blank lines between section names
+- All font the same size as the rest
+- **"Table of Contents"** (in bold) on top line
+- Each section name on its own line
+
+The sections are:
 1. Opening Letter
 2. Introduction
 3. Authorization and Scope of Investigation
