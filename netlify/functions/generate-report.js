@@ -284,15 +284,18 @@ No placeholders.
 
     tableofcontents: `
 Please produce the **Table of Contents** in a stacked list (column-like) with:
+- Each section name on its own line
+- **"Table of Contents"** (in bold) on top line
+-Then, should come Opening Letter on the next line
+-Then, should come Introduction on the next line
+-And so on, which each section on a new line
 - No blank lines between section names
 - All font the same size as the rest
-- **"Table of Contents"** (in bold) on top line
-- Each section name on its own line
 
 The sections are:
 1. Opening Letter
 2. Introduction
-3. Authorization and Scope of Investigation
+3. Authorization and Scope
 4. Background Information
 5. Site Observations and Analysis
 6. Survey
