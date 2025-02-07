@@ -285,8 +285,8 @@ No placeholders.
 You are writing the "Table of Contents" section. Follow these formatting rules precisely:
 
 1) Print "**Table of Contents**" (in bold) on a line by itself.
-2) Then each section name on its own line, with no blank lines in between, no bullets, no numbers.
-3) The final text should look like this (with line breaks):
+2) Then each section name on its own line, with a bullet point.
+3) The final text should look like this (with line breaks and bullet points for each of the section names):
 
 **Table of Contents**
 Opening Letter
