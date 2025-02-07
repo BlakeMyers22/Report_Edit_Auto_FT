@@ -282,26 +282,25 @@ No placeholders.
 `,
 
     tableofcontents: `
-Please produce the **Table of Contents** in a stacked list (column-like) with:
-- Each section name on its own line
-- **"Table of Contents"** (in bold) on top line
--Then, should come Opening Letter on the next line
--Then, should come Introduction on the next line
--And so on, which each section on a new line
-- No blank lines between section names
-- All font the same size as the rest
+You are writing the "Table of Contents" section. Follow these formatting rules precisely:
 
-The sections are:
-1. Opening Letter
-2. Introduction
-3. Authorization and Scope
-4. Background Information
-5. Site Observations and Analysis
-6. Survey
-7. Meteorologist Report
-8. Conclusions and Recommendations
-9. Rebuttal
-10. Limitations
+1) Print "**Table of Contents**" (in bold) on a line by itself.
+2) Then each section name on its own line, with no blank lines in between, no bullets, no numbers.
+3) The final text should look like this (with line breaks):
+
+**Table of Contents**
+Opening Letter
+Introduction
+Authorization and Scope
+Background Information
+Site Observations and Analysis
+Survey
+Meteorologist Report
+Conclusions and Recommendations
+Rebuttal
+Limitations
+
+No extra words, no additional punctuation, and exactly one section name per line.
 `,
 
     openingletter: `
