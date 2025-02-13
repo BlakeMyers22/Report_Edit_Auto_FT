@@ -140,6 +140,7 @@ async function generateSectionPrompt(sectionName, context, weatherData, customIn
 
   // Affected areas
   const affectedAreas       = safeArrayJoin(context?.affectedAreas);
+  const engineerNotes       = safeString(context?.engineerNotes);
 
   // Summarize roof types from checkboxes
   let roofTypesDetected = '';
@@ -248,7 +249,7 @@ Do not mention the lack or absence of any data. Only mention things on data or i
 
     observations: `
 You are writing "Site Observations and Analysis."
-Affected areas: ${affectedAreas}.
+Affected areas: ${engineerNotes}.
 Roof categories indicated: ${roofTypesDetected}.
 Claim type(s): ${claimTypeString}.
 
