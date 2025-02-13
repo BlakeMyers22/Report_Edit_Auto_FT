@@ -121,11 +121,13 @@ async function getWeatherData(location, dateString) {
     if (!location || !dateString) {
       return { success: true, data: {} };
     }
+
     const dateObj = safeParseDate(dateString);
     if (!dateObj) {
       return { success: true, data: {} };
     }
 
+    // If the date is in the future, handle it gracefully
     const today = new Date();
     if (dateObj > today) {
       return {
@@ -137,25 +139,63 @@ async function getWeatherData(location, dateString) {
     }
 
     const formattedDate = dateObj.toISOString().split('T')[0];
-    
-    const prompt = `Provide historical weather data for ${location} on ${formattedDate}. Include max temp, min temp, avg temp, max wind gust, total precipitation, type and detail of percipitation (e.g., hail and size), humidity.`;
-    
-    const response = await openai.chat.completions.create({
-      model: "chatgpt-4o-latest",
-      messages: [{ role: "user", content: prompt }],
-      max_tokens: 150
+
+    // Make the API call to Visual Crossing
+    const response = await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/history`, {
+      params: {
+        aggregateHours: 24,  // Get daily historical summary
+        contentType: 'json',
+        unitGroup: 'us',  // Use 'us' for Fahrenheit, inches, mph
+        key: process.env.WEATHER_API_KEY,  // Ensure the API key is set in environment variables
+        location: location,  // Can be an address, city, or lat,lon
+        startDateTime: formattedDate,  
+        endDateTime: formattedDate
+      }
     });
 
-    const weatherText = response.choices[0].message.content;
+    // Extract relevant weather data
+    const weatherData = response.data.locations[Object.keys(response.data.locations)[0]].values[0];
+
+    // Determine precipitation type
+    let precipitationType = "None";
+    let precipitationAmount = "0 inches";
+    let hailSize = "None";
+
+    if (weatherData.precip > 0) {
+      precipitationAmount = `${weatherData.precip} inches`;
+
+      if (weatherData.snow > 0) {
+        precipitationType = "Snow";
+      } else if (weatherData.hail > 0) {
+        precipitationType = "Hail";
+        hailSize = `${weatherData.hail} inches`;
+      } else {
+        precipitationType = "Rain";
+      }
+    }
+
     return {
       success: true,
-      data: { rawResponse: weatherText }
+      data: {
+        maxTemp: `${weatherData.maxt}°F`,
+        minTemp: `${weatherData.mint}°F`,
+        avgTemp: `${weatherData.temp}°F`,
+        maxWindGust: `${weatherData.wgust} mph`,
+        totalPrecip: precipitationAmount,
+        precipitationType: precipitationType,
+        hailSize: hailSize,
+        humidity: `${weatherData.humidity}%`,
+        conditions: weatherData.conditions
+      }
     };
+
   } catch (error) {
-    console.error('OpenAI Weather Data Fetch Error:', error);
+    console.error('Visual Crossing API Error:', error);
     return { success: false, error: error.message };
   }
 }
+
+
 
 /**
  * Build the prompt for each section, making sure we avoid
