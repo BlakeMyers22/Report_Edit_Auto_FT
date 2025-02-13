@@ -218,6 +218,7 @@ You are writing the "Introduction" for a forensic engineering report.
 - Claim Type(s): ${claimTypeString}
 Explain the purpose of the inspection (hail, wind, etc.).
 Do not add contradictory roofing details.
+Do not mention the lack or absence of any data. Only mention things on data or inputs that you have.
 `,
 
     authorization: `
@@ -227,6 +228,7 @@ Include:
 2) The scope of work (site visit, photos, etc.).
 3) Summarize major tasks.
 4) Note any references if available.
+Give as much specific detail as possible in relation to the actual property damages. But do not make anything up or say anything that cannot be directly inferred from the inputs and data you have.
 `,
 
     background: `
@@ -240,6 +242,7 @@ Include relevant details:
 - Project Name: ${projectName}
 - Property Owner: ${propertyOwnerName}
 No placeholders or contradictory info.
+Unless there is good reason, try not to repeat too much information from previous sections.
 `,
 
     observations: `
@@ -248,37 +251,46 @@ Affected areas: ${affectedAreas}.
 Roof categories indicated: ${roofTypesDetected}.
 Claim type(s): ${claimTypeString}.
 
-Only mention what the user indicated. 
+Only mention what the user indicated.
+Be as detailed as possible with information given by the inputs, with complex objective specifications, and when available, including actual hail size, wind speed and direction, patterns of damage, specific parts of roof damaged and why (i.e., parapet has metal coping that shows hail impacts in an expected pattern, in spite of the coping having space between the coping and wall beneath). 
+But do not mention anything that cannot be directly inferred from the engineering inputs and available data.
+Do not mention the absence of any information or data.
 `,
 
     moisture: `
 "Survey" (Moisture) section.
-If user indicated interior water intrusion, mention it. Otherwise, be concise.
+Do not mention anything that cannot be directly inferred from the engineering inputs and available data.
+Do not mention the absence of any information or data.
+Ensure the data is always objective and very specific leaving zero holes to argue against our engineer claims.
 `,
 
     meteorologist: `
 "Meteorologist Report" section.
 Use the data:
 ${weatherSummary}
-If not available or date is in the future, note it. 
+The information should be objective and as detailed as possible and not merely based on broad patterns observed over common periods of time.
+If this type of information is not available from the weather API, then use GPT to search the internet to establish it.
 `,
 
     conclusions: `
 "Conclusions and Recommendations."
 Summarize your final opinion on cause(s) of loss. 
 Propose next steps or repairs if relevant.
+Ensure this remains sound, objective, factual and always based on legitimate observations inputted by the engineer.
 `,
 
     rebuttal: `
 "Rebuttal" section. 
 If no third-party or conflicting reports were indicated, keep minimal. 
 Otherwise, address them if user provided details.
+Be objective in delivery and remain cogent and logically fluid/coherent.
 `,
 
     limitations: `
 "Limitations" section.
 Typical disclaimers about data reliance, scope boundaries, site access, etc.
 No placeholders.
+Ensure the output here never contradicts itself or any other part of the report. 
 `,
 
     tableofcontents: `
