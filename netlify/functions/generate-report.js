@@ -116,84 +116,125 @@ function safeParseDate(dateString) {
 // }
 
 
-async function getWeatherData(location, dateString) {
-  try {
-    if (!location || !dateString) {
-      return { success: true, data: {} };
+const axios = require('axios');
+
+/**
+ * Calculate new latitude and longitude for a given distance in miles.
+ * @param {number} lat - Latitude of the original location
+ * @param {number} lon - Longitude of the original location
+ * @param {number} miles - Distance in miles to shift
+ * @param {string} direction - Direction to shift (N, S, E, W)
+ * @returns {object} - New lat/lon
+ */
+function getNearbyCoordinates(lat, lon, miles, direction) {
+    const earthRadius = 3958.8; // Earth radius in miles
+    const latChange = miles / earthRadius * (180 / Math.PI);
+    const lonChange = latChange / Math.cos(lat * Math.PI / 180);
+
+    switch (direction) {
+        case 'N': return { lat: lat + latChange, lon };
+        case 'S': return { lat: lat - latChange, lon };
+        case 'E': return { lat, lon: lon + lonChange };
+        case 'W': return { lat, lon: lon - lonChange };
+        default: return { lat, lon };
     }
-
-    const dateObj = safeParseDate(dateString);
-    if (!dateObj) {
-      return { success: true, data: {} };
-    }
-
-    // If the date is in the future, handle it gracefully
-    const today = new Date();
-    if (dateObj > today) {
-      return {
-        success: true,
-        data: {
-          note: `Weather data not found for a future date: ${dateObj.toISOString().split('T')[0]}`
-        }
-      };
-    }
-
-    const formattedDate = dateObj.toISOString().split('T')[0];
-
-    // Make the API call to Visual Crossing
-    const response = await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/history`, {
-      params: {
-        aggregateHours: 24,  // Get daily historical summary
-        contentType: 'json',
-        unitGroup: 'us',  // Use 'us' for Fahrenheit, inches, mph
-        key: process.env.WEATHER_API_KEY,  // Ensure the API key is set in environment variables
-        location: location,  // Can be an address, city, or lat,lon
-        startDateTime: formattedDate,  
-        endDateTime: formattedDate
-      }
-    });
-
-    // Extract relevant weather data
-    const weatherData = response.data.locations[Object.keys(response.data.locations)[0]].values[0];
-
-    // Determine precipitation type
-    let precipitationType = "None";
-    let precipitationAmount = "0 inches";
-    let hailSize = "None";
-
-    if (weatherData.precip > 0) {
-      precipitationAmount = `${weatherData.precip} inches`;
-
-      if (weatherData.snow > 0) {
-        precipitationType = "Snow";
-      } else if (weatherData.hail > 0) {
-        precipitationType = "Hail";
-        hailSize = `${weatherData.hail} inches`;
-      } else {
-        precipitationType = "Rain";
-      }
-    }
-
-    return {
-      success: true,
-      data: {
-        maxTemp: `${weatherData.maxt}°F`,
-        minTemp: `${weatherData.mint}°F`,
-        avgTemp: `${weatherData.temp}°F`,
-        maxWindGust: `${weatherData.wgust} mph`,
-        totalPrecip: precipitationAmount,
-        precipitationType: precipitationType,
-        hailSize: hailSize,
-        humidity: `${weatherData.humidity}%`,
-        conditions: weatherData.conditions
-      }
-    };
-
-  } catch (error) {
-    console.error('Visual Crossing API Error:', error);
-    return { success: false, error: error.message };
-  }
 }
+
+async function fetchWeatherData(location, dateString) {
+    try {
+        const response = await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/history`, {
+            params: {
+                aggregateHours: 24,
+                contentType: 'json',
+                unitGroup: 'us',
+                key: process.env.VISUAL_CROSSING_API_KEY,
+                location: location,
+                startDateTime: dateString,
+                endDateTime: dateString
+            }
+        });
+
+        const weatherData = response.data.locations[Object.keys(response.data.locations)[0]].values[0];
+        return weatherData;
+    } catch (error) {
+        console.error(`Error fetching weather for ${location}:`, error);
+        return null;
+    }
+}
+
+async function getWeatherData(location, dateString) {
+    try {
+        if (!location || !dateString) return { success: true, data: {} };
+
+        const dateObj = new Date(dateString);
+        if (isNaN(dateObj.getTime())) return { success: true, data: {} };
+
+        const today = new Date();
+        if (dateObj > today) {
+            return {
+                success: true,
+                data: {
+                    note: `Weather data not found for a future date: ${dateObj.toISOString().split('T')[0]}`
+                }
+            };
+        }
+
+        // Get lat/lon of the main location
+        const geocodeResponse = await axios.get(`https://geocoding-api.open-meteo.com/v1/search`, {
+            params: { name: location, count: 1, language: 'en', format: 'json' }
+        });
+
+        if (!geocodeResponse.data.results || geocodeResponse.data.results.length === 0) {
+            return { success: false, error: 'Location not found' };
+        }
+
+        const { latitude, longitude } = geocodeResponse.data.results[0];
+
+        // Generate 4 nearby coordinates (N, S, E, W)
+        const nearbyCoords = [
+            getNearbyCoordinates(latitude, longitude, 20, 'N'),
+            getNearbyCoordinates(latitude, longitude, 20, 'S'),
+            getNearbyCoordinates(latitude, longitude, 20, 'E'),
+            getNearbyCoordinates(latitude, longitude, 20, 'W')
+        ];
+
+        // Fetch weather data for all locations
+        const locations = [
+            `${latitude},${longitude}`,
+            ...nearbyCoords.map(coord => `${coord.lat},${coord.lon}`)
+        ];
+
+        const weatherResults = await Promise.all(locations.map(loc => fetchWeatherData(loc, dateString)));
+        const validResults = weatherResults.filter(data => data !== null);
+
+        if (validResults.length === 0) return { success: false, error: 'No weather data available' };
+
+        // Aggregate results (averaging for broader accuracy)
+        const avg = key => (validResults.reduce((sum, data) => sum + (data[key] || 0), 0) / validResults.length).toFixed(2);
+
+        return {
+            success: true,
+            data: {
+                maxTemp: `${avg('maxt')}°F`,
+                minTemp: `${avg('mint')}°F`,
+                avgTemp: `${avg('temp')}°F`,
+                maxWindGust: `${avg('wgust')} mph`,
+                totalPrecip: `${avg('precip')} inches`,
+                precipitationType: validResults.some(data => data.hail > 0) ? 'Hail' :
+                                  validResults.some(data => data.snow > 0) ? 'Snow' :
+                                  validResults.some(data => data.precip > 0) ? 'Rain' : 'None',
+                hailSize: validResults.some(data => data.hail > 0) ? `${avg('hail')} inches` : 'None',
+                humidity: `${avg('humidity')}%`,
+                conditions: validResults.map(data => data.conditions).join(', ')
+            }
+        };
+
+    } catch (error) {
+        console.error('Error in getWeatherData:', error);
+        return { success: false, error: error.message };
+    }
+}
+
 
 
 
