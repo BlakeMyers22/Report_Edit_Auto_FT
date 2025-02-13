@@ -346,7 +346,7 @@ You are writing the "Introduction" for a forensic engineering report.
 - Date of Loss: ${dateOfLoss}
 - Investigation Date: ${investigationDate}
 - Claim Type(s): ${claimTypeString}
-Explain the purpose of the inspection (hail, wind, etc.).
+Explain the purpose of the inspection.
 Do not add contradictory roofing details.
 Do not mention the lack or absence of any data. Only mention things on data or inputs that you have.
 `,
@@ -357,8 +357,8 @@ Include:
 1) Who authorized it (e.g., property owner or law firm).
 2) The scope of work (site visit, photos, etc.).
 3) Summarize major tasks.
-4) Note any references if available.
-Give as much specific detail as possible in relation to the actual property damages. But do not make anything up or say anything that cannot be directly inferred from the inputs and data you have.
+Do not make anything up or say anything that cannot be directly inferred from the inputs you have.
+Do not mention the lack or absence of any data. Only mention things on data or inputs that you have
 `,
 
     background: `
