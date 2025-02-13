@@ -115,9 +115,6 @@ function safeParseDate(dateString) {
 //   }
 // }
 
-
-const axios = require('axios');
-
 /**
  * Function to approximate latitude/longitude offsets for a given mile radius.
  * 1 degree of latitude ≈ 69 miles
