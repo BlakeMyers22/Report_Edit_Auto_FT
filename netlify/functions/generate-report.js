@@ -141,7 +141,7 @@ async function getWeatherData(location, dateString) {
     const prompt = `Provide historical weather data for ${location} on ${formattedDate}. Include max temp, min temp, avg temp, max wind gust, total precipitation, type and detail of percipitation (e.g., hail and size), humidity.`;
     
     const response = await openai.chat.completions.create({
-      model: "gpt-4o-2024-08-06",
+      model: "chatgpt-4o-latest",
       messages: [{ role: "user", content: prompt }],
       max_tokens: 150
     });
