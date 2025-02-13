@@ -399,6 +399,7 @@ Ensure the data is always objective and specific leaving zero holes to argue aga
     meteorologist: `
 "Meteorologist Report" section.
 Use the data:
+Affected areas: ${engineerNotes}.
 ${weatherSummary}
 Use only information that does not contradict the inputs from the engineer.
 `,
