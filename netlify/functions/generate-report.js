@@ -58,6 +58,64 @@ function safeParseDate(dateString) {
  * Fetch historical weather data with safe checks.
  * If the date is in the future or unavailable, we handle that gracefully.
  */
+// async function getWeatherData(location, dateString) {
+//   try {
+//     if (!location || !dateString) {
+//       return { success: true, data: {} };
+//     }
+//     const dateObj = safeParseDate(dateString);
+//     if (!dateObj) {
+//       return { success: true, data: {} };
+//     }
+
+//     // If the date is after "today", skip or note it.
+//     const today = new Date();
+//     if (dateObj > today) {
+//       return {
+//         success: true,
+//         data: {
+//           note: `Weather data not found for a future date: ${dateObj.toISOString().split('T')[0]}`
+//         }
+//       };
+//     }
+
+//     const formattedDate = dateObj.toISOString().split('T')[0];
+
+//     // Attempt call to WeatherAPI
+//     const response = await axios.get('http://api.weatherapi.com/v1/history.json', {
+//       params: {
+//         key: process.env.WEATHER_API_KEY,
+//         q: location,
+//         dt: formattedDate
+//       }
+//     });
+
+//     const dayData = response.data.forecast.forecastday[0].day;
+//     const hourlyData = response.data.forecast.forecastday[0].hour;
+//     const maxWindGust = Math.max(...hourlyData.map(hour => hour.gust_mph));
+//     const maxWindTime = hourlyData.find(hour => hour.gust_mph === maxWindGust)?.time || '';
+
+//     return {
+//       success: true,
+//       data: {
+//         maxTemp: `${dayData.maxtemp_f}°F`,
+//         minTemp: `${dayData.mintemp_f}°F`,
+//         avgTemp: `${dayData.avgtemp_f}°F`,
+//         maxWindGust: `${maxWindGust} mph`,
+//         totalPrecip: `${dayData.totalprecip_in} inches`,
+//         humidity: `${dayData.avghumidity}%`,
+//         conditions: dayData.condition.text,
+//         hailPossible: dayData.condition.text.toLowerCase().includes('hail') ? 'Yes' : 'No',
+//         thunderstorm: dayData.condition.text.toLowerCase().includes('thunder') ? 'Yes' : 'No'
+//       }
+//     };
+//   } catch (error) {
+//     console.error('Weather API Error:', error);
+//     return { success: false, error: error.message };
+//   }
+// }
+
+
 async function getWeatherData(location, dateString) {
   try {
     if (!location || !dateString) {
@@ -68,7 +126,6 @@ async function getWeatherData(location, dateString) {
       return { success: true, data: {} };
     }
 
-    // If the date is after "today", skip or note it.
     const today = new Date();
     if (dateObj > today) {
       return {
@@ -80,37 +137,22 @@ async function getWeatherData(location, dateString) {
     }
 
     const formattedDate = dateObj.toISOString().split('T')[0];
-
-    // Attempt call to WeatherAPI
-    const response = await axios.get('http://api.weatherapi.com/v1/history.json', {
-      params: {
-        key: process.env.WEATHER_API_KEY,
-        q: location,
-        dt: formattedDate
-      }
+    
+    const prompt = `Provide historical weather data for ${location} on ${formattedDate}. Include max temp, min temp, avg temp, max wind gust, total precipitation, type and detail of percipitation (e.g., hail and size), humidity.`;
+    
+    const response = await openai.chat.completions.create({
+      model: "gpt-4-turbo",
+      messages: [{ role: "user", content: prompt }],
+      max_tokens: 150
     });
 
-    const dayData = response.data.forecast.forecastday[0].day;
-    const hourlyData = response.data.forecast.forecastday[0].hour;
-    const maxWindGust = Math.max(...hourlyData.map(hour => hour.gust_mph));
-    const maxWindTime = hourlyData.find(hour => hour.gust_mph === maxWindGust)?.time || '';
-
+    const weatherText = response.choices[0].message.content;
     return {
       success: true,
-      data: {
-        maxTemp: `${dayData.maxtemp_f}°F`,
-        minTemp: `${dayData.mintemp_f}°F`,
-        avgTemp: `${dayData.avgtemp_f}°F`,
-        maxWindGust: `${maxWindGust} mph`,
-        totalPrecip: `${dayData.totalprecip_in} inches`,
-        humidity: `${dayData.avghumidity}%`,
-        conditions: dayData.condition.text,
-        hailPossible: dayData.condition.text.toLowerCase().includes('hail') ? 'Yes' : 'No',
-        thunderstorm: dayData.condition.text.toLowerCase().includes('thunder') ? 'Yes' : 'No'
-      }
+      data: { rawResponse: weatherText }
     };
   } catch (error) {
-    console.error('Weather API Error:', error);
+    console.error('OpenAI Weather Data Fetch Error:', error);
     return { success: false, error: error.message };
   }
 }
