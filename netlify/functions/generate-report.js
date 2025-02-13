@@ -120,7 +120,16 @@ function safeParseDate(dateString) {
  * 1 degree of latitude ≈ 69 miles
  * 1 degree of longitude ≈ varies (near the equator it's ~69 miles, but less at higher latitudes)
  */
-function getBoundingCoordinates(lat, lon, radiusMiles = 20) {
+
+
+const axios = require('axios');
+
+/**
+ * Function to approximate latitude/longitude offsets for a given mile radius.
+ * 1 degree of latitude ≈ 69 miles
+ * 1 degree of longitude ≈ varies (near the equator it's ~69 miles, but less at higher latitudes)
+ */
+function getBoundingCoordinates(lat, lon, radiusMiles = 50) {
   const latOffset = radiusMiles / 69;
   const lonOffset = radiusMiles / (69 * Math.cos(lat * (Math.PI / 180))); // Adjust for longitude compression at higher latitudes
 
@@ -133,7 +142,7 @@ function getBoundingCoordinates(lat, lon, radiusMiles = 20) {
 }
 
 /**
- * Function to fetch weather data from Visual Crossing within a 20-mile radius.
+ * Fetch weather data from Visual Crossing within a 50-mile radius.
  */
 async function getWeatherData(location, dateString) {
   try {
@@ -175,54 +184,57 @@ async function getWeatherData(location, dateString) {
     const lat = center[1];
 
     // Step 2: Compute bounding box
-    const { minLat, maxLat, minLon, maxLon } = getBoundingCoordinates(lat, lon, 20);
+    const { minLat, maxLat, minLon, maxLon } = getBoundingCoordinates(lat, lon, 50);
 
     // Step 3: Fetch weather data for multiple locations in this bounding box
     const response = await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/history`, {
       params: {
-        aggregateHours: 24,  // Get daily historical summary
+        aggregateHours: 24,  
         contentType: 'json',
         unitGroup: 'us',
         key: process.env.WEATHER_API_KEY,
-        location: `${lat},${lon}`, // Use central coordinates
+        location: `${lat},${lon}`,
         startDateTime: formattedDate,
         endDateTime: formattedDate
       }
     });
 
+    // Extract relevant weather data
     const weatherData = response.data.locations[Object.keys(response.data.locations)[0]].values[0];
 
-    // Step 4: Determine precipitation details
-    let precipitationType = "None";
-    let precipitationAmount = "0 inches";
-    let hailSize = "None";
+    let result = {};
 
+    // Always report rain if present
     if (weatherData.precip > 0) {
-      precipitationAmount = `${weatherData.precip} inches`;
+      result.precipitationType = "Rain";
+      result.totalPrecip = `${weatherData.precip} inches`;
+    }
 
-      if (weatherData.snow > 0) {
-        precipitationType = "Snow";
-      } else if (weatherData.hail > 0) {
-        precipitationType = "Hail";
-        hailSize = `${weatherData.hail} inches`;
-      } else {
-        precipitationType = "Rain";
+    // Always report snow if present
+    if (weatherData.snow !== undefined && weatherData.snow > 0) {
+      result.precipitationType = "Snow";
+      result.snowAmount = `${weatherData.snow} inches`;
+    }
+
+    // Always report hail if present
+    if (weatherData.hail !== undefined) {
+      result.precipitationType = "Hail";
+      if (weatherData.hail > 0) {
+        result.hailSize = `${weatherData.hail} inches`;
       }
     }
 
+    // Include other key weather metrics
+    result.maxTemp = `${weatherData.maxt}°F`;
+    result.minTemp = `${weatherData.mint}°F`;
+    result.avgTemp = `${weatherData.temp}°F`;
+    result.maxWindGust = `${weatherData.wgust} mph`;
+    result.humidity = `${weatherData.humidity}%`;
+    result.conditions = weatherData.conditions;
+
     return {
       success: true,
-      data: {
-        maxTemp: `${weatherData.maxt}°F`,
-        minTemp: `${weatherData.mint}°F`,
-        avgTemp: `${weatherData.temp}°F`,
-        maxWindGust: `${weatherData.wgust} mph`,
-        totalPrecip: precipitationAmount,
-        precipitationType: precipitationType,
-        hailSize: hailSize,
-        humidity: `${weatherData.humidity}%`,
-        conditions: weatherData.conditions
-      }
+      data: result
     };
 
   } catch (error) {
@@ -230,6 +242,7 @@ async function getWeatherData(location, dateString) {
     return { success: false, error: error.message };
   }
 }
+
 
 
 
