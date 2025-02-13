@@ -261,6 +261,7 @@ Do not mention the lack or absence of any data. Only mention things on inputs in
 
     moisture: `
 "Survey" (Moisture) section.
+Affected areas: ${engineerNotes}.
 Do not mention anything that is not directly given in the engineering inputs.
 Do not mention the absence of any information or data.
 Ensure the data is always objective and specific leaving zero holes to argue against our engineer claims.
