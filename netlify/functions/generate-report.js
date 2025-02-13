@@ -243,6 +243,7 @@ Include relevant details:
 - Property Owner: ${propertyOwnerName}
 No placeholders or contradictory info.
 Unless there is good reason, try not to repeat too much information from previous sections.
+Do not mention the lack or absence of any data. Only mention things on data or inputs that you have.
 `,
 
     observations: `
@@ -252,16 +253,15 @@ Roof categories indicated: ${roofTypesDetected}.
 Claim type(s): ${claimTypeString}.
 
 Only mention what the user indicated.
-Be as detailed as possible with information given by the inputs, with complex objective specifications, and when available, including actual hail size, wind speed and direction, patterns of damage, specific parts of roof damaged and why (i.e., parapet has metal coping that shows hail impacts in an expected pattern, in spite of the coping having space between the coping and wall beneath). 
-But do not mention anything that cannot be directly inferred from the engineering inputs and available data.
-Do not mention the absence of any information or data.
+Be as detailed as possible with information given by the inputs. But do not go beyond what is directly given in the inputs.
+Do not mention the lack or absence of any data. Only mention things on data or inputs that you have.
 `,
 
     moisture: `
 "Survey" (Moisture) section.
-Do not mention anything that cannot be directly inferred from the engineering inputs and available data.
+Do not mention anything that is not directly given in the engineering inputs.
 Do not mention the absence of any information or data.
-Ensure the data is always objective and very specific leaving zero holes to argue against our engineer claims.
+Ensure the data is always objective and specific leaving zero holes to argue against our engineer claims.
 `,
 
     meteorologist: `
@@ -270,6 +270,7 @@ Use the data:
 ${weatherSummary}
 The information should be objective and as detailed as possible and not merely based on broad patterns observed over common periods of time.
 If this type of information is not available from the weather API, then use GPT to search the internet to establish it.
+Do not mention general weather patterns. Only mention specific details that you know apply.
 `,
 
     conclusions: `
