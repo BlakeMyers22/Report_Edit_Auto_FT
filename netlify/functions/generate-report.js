@@ -400,9 +400,7 @@ Ensure the data is always objective and specific leaving zero holes to argue aga
 "Meteorologist Report" section.
 Use the data:
 ${weatherSummary}
-The information should be objective and as detailed as possible and not merely based on broad patterns observed over common periods of time.
-If this type of information is not available from the weather API, then use GPT to search the internet to establish it.
-Do not mention general weather patterns. Only mention specific details that you know apply.
+Use only information that does not contradict the inputs from the engineer.
 `,
 
     conclusions: `
