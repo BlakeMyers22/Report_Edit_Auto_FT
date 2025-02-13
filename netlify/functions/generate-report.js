@@ -404,6 +404,7 @@ Do not repeat too much from the Engineer Notes that has already been mentioned i
 Use only weather information that does not contradict the inputs from the engineer.
 Use weather information to support Engineer claims.
 Do not talk about lack of evidence about any weather data.
+Don't mention the engineer. You are him.
 `,
 
     conclusions: `
@@ -411,13 +412,17 @@ Do not talk about lack of evidence about any weather data.
 Summarize your final opinion on cause(s) of loss. 
 Propose next steps or repairs if relevant.
 Ensure this remains sound, objective, factual and always based on legitimate observations inputted by the engineer.
+Don't mention the engineer. You are him.
 `,
 
     rebuttal: `
-"Rebuttal" section. 
-If no third-party or conflicting reports were indicated, keep minimal. 
-Otherwise, address them if user provided details.
-Be objective in delivery and remain cogent and logically fluid/coherent.
+"Rebuttal" section.
+Engineer Notes: ${engineerNotes}.
+Keep in as close allignment as possible to what the engineer has said in the input.
+Do not mention the lack of any weather data.
+Use only weather information that does not contradict the inputs from the engineer.
+Use weather information only to support Engineer claims.
+Don't mention the engineer. You are him.
 `,
 
     limitations: `
