@@ -147,7 +147,7 @@ async function fetchWeatherData(location, dateString) {
                 aggregateHours: 24,
                 contentType: 'json',
                 unitGroup: 'us',
-                key: process.env.VISUAL_CROSSING_API_KEY,
+                key: process.env.WEATHER_API_KEY,
                 location: location,
                 startDateTime: dateString,
                 endDateTime: dateString
