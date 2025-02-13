@@ -252,9 +252,10 @@ Affected areas: ${affectedAreas}.
 Roof categories indicated: ${roofTypesDetected}.
 Claim type(s): ${claimTypeString}.
 
-Only mention what the user indicated.
-Be as detailed as possible with information given by the inputs. But do not go beyond what is directly given in the inputs.
-Do not mention the lack or absence of any data. Only mention things on data or inputs that you have.
+Only mention what the user indicated in the Engineer Notes.
+Do not say that the engineer inspected something (e.g., interior) unless explicity said in the Engineer Notes.
+Do not go beyond what is directly given in the Engineer Notes inputs.
+Do not mention the lack or absence of any data. Only mention things on inputs in Engineer Notes.
 `,
 
     moisture: `
