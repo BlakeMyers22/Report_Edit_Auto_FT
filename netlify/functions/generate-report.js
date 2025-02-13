@@ -398,10 +398,12 @@ Ensure the data is always objective and specific leaving zero holes to argue aga
 
     meteorologist: `
 "Meteorologist Report" section.
-Use the data:
-Affected areas: ${engineerNotes}.
-${weatherSummary}
-Use only information that does not contradict the inputs from the engineer.
+Data: ${weatherSummary}.
+Engineer Notes: ${engineerNotes}.
+Do not repeat too much from the Engineer Notes that has already been mentioned in previous sections.
+Use only weather information that does not contradict the inputs from the engineer.
+Use weather information to support Engineer claims.
+Do not talk about lack of evidence about any weather data.
 `,
 
     conclusions: `
