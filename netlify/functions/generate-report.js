@@ -121,9 +121,6 @@ function safeParseDate(dateString) {
  * 1 degree of longitude ≈ varies (near the equator it's ~69 miles, but less at higher latitudes)
  */
 
-
-const axios = require('axios');
-
 /**
  * Function to approximate latitude/longitude offsets for a given mile radius.
  * 1 degree of latitude ≈ 69 miles
