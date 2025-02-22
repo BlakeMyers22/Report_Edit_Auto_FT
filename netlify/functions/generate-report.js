@@ -357,7 +357,7 @@ Include:
 1) Who authorized it (e.g., property owner or law firm).
 2) The scope of work (site visit, photos, etc.).
 3) Summarize major tasks.
-Do not repeat too many specific details from the introduction.
+Do not repeat details if aleardy in a previous section, such as the property address and the property owner.
 Do not make anything up or say anything that cannot be directly inferred from the inputs you have.
 Do not mention the lack or absence of any data. Only mention things on data or inputs that you have
 `,
@@ -373,7 +373,7 @@ Include relevant details:
 - Project Name: ${projectName}
 - Property Owner: ${propertyOwnerName}
 No placeholders or contradictory info.
-Unless there is good reason, try not to repeat too much information from previous sections or from Introduction.
+Unless there is good reason, Do not repeat details if aleardy in a previous section, such as the property address and the property owner.
 Do not mention the lack or absence of any data. Only mention things on data or inputs that you have.
 `,
 
@@ -384,6 +384,7 @@ Roof categories indicated: ${roofTypesDetected}.
 Claim type(s): ${claimTypeString}.
 
 Only mention what the user indicated in the Engineer Notes.
+Unless there is good reason, Do not repeat details if aleardy in a previous section, such as the property address and the property owner.
 Do not say that the engineer inspected something (e.g., interior) unless explicity said in the Engineer Notes.
 Do not go beyond what is directly given in the Engineer Notes inputs.
 Do not mention the lack or absence of any data. Only mention things on inputs in Engineer Notes.
@@ -393,6 +394,7 @@ Do not mention the lack or absence of any data. Only mention things on inputs in
 "Survey" (Moisture) section.
 Affected areas: ${engineerNotes}.
 Do not mention anything that is not directly given in the engineering inputs.
+Unless there is good reason, Do not repeat details if aleardy in a previous section, such as the property address and the property owner.
 Do not mention the absence of any information or data.
 Ensure the data is always objective and specific leaving zero holes to argue against our engineer claims.
 `,
