@@ -357,6 +357,7 @@ Include:
 1) Who authorized it (e.g., property owner or law firm).
 2) The scope of work (site visit, photos, etc.).
 3) Summarize major tasks.
+Do not repeat too many specific details from the introduction.
 Do not make anything up or say anything that cannot be directly inferred from the inputs you have.
 Do not mention the lack or absence of any data. Only mention things on data or inputs that you have
 `,
@@ -372,7 +373,7 @@ Include relevant details:
 - Project Name: ${projectName}
 - Property Owner: ${propertyOwnerName}
 No placeholders or contradictory info.
-Unless there is good reason, try not to repeat too much information from previous sections.
+Unless there is good reason, try not to repeat too much information from previous sections or from Introduction.
 Do not mention the lack or absence of any data. Only mention things on data or inputs that you have.
 `,
 
