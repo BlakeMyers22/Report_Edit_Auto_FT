@@ -370,8 +370,6 @@ Include relevant details:
 - Construction Type: ${constructionType}
 - Current Use: ${currentUse}
 - Square Footage: ${squareFootage}
-- Project Name: ${projectName}
-- Property Owner: ${propertyOwnerName}
 No placeholders or contradictory info.
 Unless there is good reason, Do not repeat details if aleardy in a previous section, such as the property address and the property owner.
 Do not mention the lack or absence of any data. Only mention things on data or inputs that you have.
