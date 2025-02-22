@@ -561,7 +561,7 @@ exports.handler = async function(event) {
           content: prompt
         }
       ],
-      temperature: 0.0, // reduce "creative" contradictions
+      temperature: 0.2, // reduce "creative" contradictions
       max_tokens: 4000
     });
 
