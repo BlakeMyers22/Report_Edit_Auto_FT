@@ -371,7 +371,7 @@ Include relevant details:
 - Current Use: ${currentUse}
 - Square Footage: ${squareFootage}
 No placeholders or contradictory info.
-Unless there is good reason, Do not repeat details if aleardy in a previous section, such as the property address and the property owner.
+Do not repeat details if aleardy in a previous section, such as the property address and the property owner.
 Do not mention the lack or absence of any data. Only mention things on data or inputs that you have.
 `,
 
@@ -382,7 +382,7 @@ Roof categories indicated: ${roofTypesDetected}.
 Claim type(s): ${claimTypeString}.
 
 Only mention what the user indicated in the Engineer Notes.
-Unless there is good reason, Do not repeat details if aleardy in a previous section, such as the property address and the property owner.
+Do not repeat details if aleardy in a previous section, such as the property address and the property owner.
 Do not say that the engineer inspected something (e.g., interior) unless explicity said in the Engineer Notes.
 Do not go beyond what is directly given in the Engineer Notes inputs.
 Do not mention the lack or absence of any data. Only mention things on inputs in Engineer Notes.
@@ -392,7 +392,7 @@ Do not mention the lack or absence of any data. Only mention things on inputs in
 "Survey" (Moisture) section.
 Affected areas: ${engineerNotes}.
 Do not mention anything that is not directly given in the engineering inputs.
-Unless there is good reason, Do not repeat details if aleardy in a previous section, such as the property address and the property owner.
+Do not repeat details if aleardy in a previous section, such as the property address and the property owner.
 Do not mention the absence of any information or data.
 Ensure the data is always objective and specific leaving zero holes to argue against our engineer claims.
 `,
@@ -402,6 +402,7 @@ Ensure the data is always objective and specific leaving zero holes to argue aga
 Data: ${weatherSummary}.
 Engineer Notes: ${engineerNotes}.
 Do not repeat too much from the Engineer Notes that has already been mentioned in previous sections.
+Do not repeat details if aleardy in a previous section, such as the property address and the property owner.
 Use only weather information that does not contradict the inputs from the engineer.
 Use weather information to support Engineer claims.
 Do not talk about lack of evidence about any weather data.
@@ -421,6 +422,7 @@ Don't mention the engineer. You are him.
 Engineer Notes: ${engineerNotes}.
 Keep in as close allignment as possible to what the engineer has said in the input.
 Do not mention the lack of any weather data.
+Do not repeat details if aleardy in a previous section, such as the property address and the property owner.
 Use only weather information that does not contradict the inputs from the engineer.
 Use weather information only to support Engineer claims.
 Don't mention the engineer. You are him.
@@ -430,6 +432,7 @@ Don't mention the engineer. You are him.
 "Limitations" section.
 Typical disclaimers about data reliance, scope boundaries, site access, etc.
 No placeholders.
+Do not repeat details if aleardy in a previous section, such as the property address and the property owner.
 Ensure the output here never contradicts itself or any other part of the report. 
 `,
 
